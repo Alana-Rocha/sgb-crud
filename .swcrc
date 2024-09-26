@@ -1,7 +1,7 @@
 {
   "jsc": {
     "parser": {
-      "syntax": "typescript",
+      "syntax": "ecmascript",
       "tsx": false
     },
     "target": "es2022",
