@@ -22,21 +22,4 @@ export class Query {
       return false;
     }
   }
-
-  async inserirDadosTabela(nome, email, senha) {
-    const arquivo = "./src/sql/insert-dados.sql";
-    const sql = this.lerArquivoSQL(arquivo);
-
-    try {
-      await new Promise((resolve, reject) => {
-        conexion.query(sql, [nome, email, senha], (err) => {
-          if (err) return reject(err);
-          resolve("Dados inseridos");
-        });
-      });
-      return true;
-    } catch (err) {
-      return err;
-    }
-  }
 }
