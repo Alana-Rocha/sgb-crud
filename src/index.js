@@ -1,10 +1,10 @@
-import { conexion } from "./database/conexion.js";
+import { connection } from "./database/conexion.js";
 import { Query } from "./queries/query.js";
 import PromptSync from "prompt-sync";
 
 const scan = PromptSync();
 const query = new Query();
-conexion.connect();
+connection.connect();
 query.criarTabelas();
 
 async function main() {
@@ -44,7 +44,7 @@ async function main() {
         break;
       case 5:
         console.log("Saindo...");
-        conexion.end();
+        connection.end();
         break;
       default:
         console.log("Opção inválida! Tente novamente.");1

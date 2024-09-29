@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-export const conexion = mysql.createConnection({
+export const connection = mysql.createConnection({
   host: "localhost",
   port: process.env.PORT,
   user: process.env.USER,
@@ -11,7 +11,7 @@ export const conexion = mysql.createConnection({
   database: process.env.DATABASE,
 });
 
-conexion.connect((err) => {
+connection.connect((err) => {
   if (err) {
     console.error('Erro ao conectar ao MySQL: ', err);
     return;

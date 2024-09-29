@@ -1,4 +1,4 @@
-import { conexion } from "../database/conexion.js";
+import { connection } from "../database/conexion.js";
 import fs from "node:fs";
 
 export class Query {
@@ -12,7 +12,7 @@ export class Query {
 
     try {
       await new Promise((resolve, reject) => {
-        conexion.query(sql, (err) => {
+        connection.query(sql, (err) => {
           if (err) return reject(err);
           resolve("tabela criada com sucesso");
         });
