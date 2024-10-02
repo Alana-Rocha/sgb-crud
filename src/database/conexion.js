@@ -9,12 +9,17 @@ export const connection = mysql.createConnection({
   user: process.env.USER,
   password: process.env.PASSWORD,
   database: process.env.DATABASE,
+  multipleStatements: true,
 });
 
-connection.connect((err) => {
-  if (err) {
-    console.error('Erro ao conectar ao MySQL: ', err);
-    return;
-  }
-  console.log('Conectado ao banco de dados MySQL.');
-});
+export async function connectDB() {
+  await new Promise((resolve, reject) => {
+    connection.connect((err) => {
+      if (err) {
+        return reject("Erro ao conectar ao banco de dados: " + err);
+      }
+      console.log("CONECTADO");
+      resolve("Conectado");
+    });
+  });
+}
