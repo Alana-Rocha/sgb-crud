@@ -21,3 +21,13 @@ export function menuTabelas() {
     7 - Voltar \n
   `);
 }
+
+export function menuAtualizaCliente() {
+  console.log(`
+    \n
+    1 - CPF
+    2 - Nome
+    3 - Idade
+    7 - Voltar \n
+  `);
+}

@@ -16,14 +16,20 @@ export class Cliente {
   inputDados() {
     this.cpf = this.scan("Digite o CPF: ");
     this.nome_cliente = this.scan("Digite o nome do cliente: ");
-    this.idade = +this.scan("Digite a idade: "); // Converte a idade para número
+    this.idade = +this.scan("Digite a idade: "); 
   }
 
   async escreverDadosDB() {
     const sql = `INSERT INTO cliente (cpf, nome_cliente, idade) VALUES (?, ?, ?)`;
-    connection.query(sql, [this.cpf, this.nome_cliente, this.idade], (err) => {
-      if (err) return console.log("Erro ao inserir dados do cliente", err);
-      return console.log("sucesso");
+    await new Promise((resolve, reject) => {
+      connection.query(
+        sql,
+        [this.cpf, this.nome_cliente, this.idade],
+        (err) => {
+          if (err) return reject("Erro ao inserir dados do cliente", err);
+          return resolve("Cliente inserido");
+        }
+      );
     });
   }
 
@@ -31,8 +37,20 @@ export class Cliente {
     const sql = `SELECT * FROM cliente`;
     await new Promise((resolve, reject) => {
       connection.query(sql, (err, result) => {
-        if (err) return reject(console.log("Erro ao buscar CPF", err));
+        if (err) return reject(console.log("Erro ao buscar", err));
         return resolve(console.log(result));
+      });
+    });
+  }
+
+  async removerClientesDB() {
+    const cpf = this.scan("Deleter pelo CPF: ");
+    const sql = `DELETE FROM cliente WHERE cpf = ?`;
+    await new Promise((resolve, reject) => {
+      connection.query(sql, [cpf], (err, result) => {
+        if (err) return reject(console.log("Erro ao deleter", err));
+
+        return resolve("cliente excluido");
       });
     });
   }

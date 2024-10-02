@@ -12,6 +12,7 @@ async function main() {
     await executeSqlFile();
 
     let opt;
+    let opt2;
     while (opt !== 5) {
       menuInicial();
 
@@ -25,11 +26,25 @@ async function main() {
           break;
         case 2:
           await inserirRegistros();
+          opt2 = +scan("Deseja inserir novamente? (1 - Sim | 2 - Não): ");
+
+          //Se quiser continuar inseriondo cai no while até ele digitar 2
+          while (opt2 === 1) {
+            await inserirRegistros();
+            opt2 = +scan("Deseja inserir novamente? (1 - Sim | 2 - Não): ");
+          }
           scan("Enter para continuar...");
           console.clear();
           break;
         case 3:
           await removerRegistros();
+          opt2 = +scan("Deseja remover novamente? (1 - Sim | 2 - Não): ");
+
+          //Se quiser continuar removendo cai no while até ele digitar 2
+          while (opt2 === 1) {
+            await removerRegistros();
+            opt2 = +scan("Deseja remover novamente? (1 - Sim | 2 - Não): ");
+          }
           scan("Enter para continuar...");
           console.clear();
           break;
@@ -108,11 +123,54 @@ async function inserirRegistros() {
 }
 
 async function removerRegistros() {
-  console.log("Removendo registros...");
+  menuTabelas();
+  let opt = +scan("Opção: ");
+
+  switch (opt) {
+    case 1:
+      const cliente = new Cliente();
+      cliente.removerClientesDB();
+      break;
+    case 2:
+      break;
+    case 3:
+      break;
+    case 4:
+      break;
+    case 5:
+      break;
+    case 6:
+      break;
+    case 7:
+      break;
+    default:
+      break;
+  }
 }
 
 async function atualizarRegistros() {
-  console.log("Atualizando registros...");
+  menuTabelas();
+  let opt = +scan("Opção: ");
+
+  switch (opt) {
+    case 1:
+      const cliente = new Cliente();
+      break;
+    case 2:
+      break;
+    case 3:
+      break;
+    case 4:
+      break;
+    case 5:
+      break;
+    case 6:
+      break;
+    case 7:
+      break;
+    default:
+      break;
+  }
 }
 
 main();
