@@ -1,6 +1,7 @@
 import { menuInicial, menuTabelas } from "./config/menus.js";
 import { connectDB, connection } from "./database/conexion.js";
 import { Cliente } from "./models/Cliente.js";
+import { Filme } from "./models/Filme.js";
 import { executeSqlFile } from "./queries/query.js";
 import PromptSync from "prompt-sync";
 
@@ -79,6 +80,8 @@ async function relatorios() {
       await cliente.buscarClientesDB();
       break;
     case 2:
+      const filme = new Filme();
+      await filme.buscarFilmesDB();
       break;
     case 3:
       break;
@@ -103,9 +106,12 @@ async function inserirRegistros() {
     case 1:
       const cliente = new Cliente();
       cliente.inputDados();
-      cliente.escreverDadosDB();
+      await cliente.escreverDadosDB();
       break;
     case 2:
+      const filme = new Filme();
+      filme.inputDados();
+      await filme.escreverDadosDB();
       break;
     case 3:
       break;

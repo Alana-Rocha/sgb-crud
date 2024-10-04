@@ -7,33 +7,33 @@ CREATE TABLE IF NOT EXISTS cliente (
 CREATE TABLE IF NOT EXISTS filmes (
     id SERIAL PRIMARY KEY,
     titulo VARCHAR(255) NOT NULL,
-    duracao INTEGER NOT NULL,
+    duracao DOUBLE  NOT NULL,
     genero VARCHAR(255)
 );
 
 CREATE TABLE IF NOT EXISTS salas (
     id SERIAL PRIMARY KEY,
     nome VARCHAR(255) NOT NULL,
-    total_assentos INTEGER NOT NULL
+    total_assentos int NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS sessoes (
     id SERIAL PRIMARY KEY,
-    filme_id INTEGER REFERENCES filmes(id) ON DELETE CASCADE,
-    sala_id INTEGER REFERENCES salas(id) ON DELETE CASCADE,
+    filme_id int REFERENCES filmes(id) ON DELETE CASCADE,
+    sala_id int REFERENCES salas(id) ON DELETE CASCADE,
     horario_inicio TIMESTAMP NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS poltronas (
     id SERIAL PRIMARY KEY,
-    sala_id INTEGER REFERENCES salas(id) ON DELETE CASCADE,
+    sala_id int REFERENCES salas(id) ON DELETE CASCADE,
     numero_poltrona VARCHAR(10) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS ingressos (
     id SERIAL PRIMARY KEY,
-    sessao_id INTEGER REFERENCES sessoes(id) ON DELETE CASCADE,
-    poltrona_id INTEGER REFERENCES poltronas(id) ON DELETE CASCADE,
+    sessao_id int REFERENCES sessoes(id) ON DELETE CASCADE,
+    poltrona_id int REFERENCES poltronas(id) ON DELETE CASCADE,
     cpf_cliente VARCHAR(14) NOT NULL REFERENCES cliente(cpf)
 );
 
