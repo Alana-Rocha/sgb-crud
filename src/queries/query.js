@@ -1,6 +1,5 @@
-
-import { connectDB, connection } from "../database/conexion.js";
 import fs from "node:fs";
+import { connection } from "../database/conexion.js";
 
 export async function executeSqlFile() {
   const sql = fs.readFileSync("./src/sql/create-tables.sql", "utf-8");

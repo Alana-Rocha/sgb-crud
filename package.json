@@ -15,8 +15,10 @@
   "license": "ISC",
   "dependencies": {
     "dotenv": "^16.4.5",
+    "global": "^4.4.0",
     "mysql2": "^3.11.3",
-    "prompt-sync": "^4.2.0"
+    "prompt-sync": "^4.2.0",
+    "safe-rm": "^1.0.7"
   },
   "devDependencies": {
     "@biomejs/biome": "1.8.3",
