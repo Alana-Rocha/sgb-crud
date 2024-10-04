@@ -1,14 +1,19 @@
 export class Sessao {
   horario;
-  valor_bilhete;
   quant_assentos;
   sala;
 
-  constructor(horario, valor_bilhete, quant_assentos, sala) {
-    this.horario = horario;
-    this.valor_bilhete = valor_bilhete;
-    this.quant_assentos = quant_assentos;
-    this.sala = sala;
+  constructor() {
+    this.horario = "";
+    this.quant_assentos = 0;
+    this.sala = 0;
+    this.scan = PromptSync();
+  }
+
+  inputDados() {
+    this.horario = this.scan("Digite o Horario de inicio do filme (AAAA/MM/DD HH/MM): ");
+    this.quant_assentos = this.scan("Digite a quantidade de assentos da sala: ");
+    this.idade = +this.scan("Digite a idade: "); 
   }
 
   getHorario() {

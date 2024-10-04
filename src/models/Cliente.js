@@ -1,6 +1,6 @@
 import PromptSync from "prompt-sync";
-import { connectDB, connection } from "../database/conexion.js";
-import { rejects } from "assert";
+import { connection } from "../database/conexion.js";
+
 
 export class Cliente {
   cpf;
@@ -13,6 +13,7 @@ export class Cliente {
     this.idade = 0;
     this.scan = PromptSync();
   }
+
   inputDados() {
     this.cpf = this.scan("Digite o CPF: ");
     this.nome_cliente = this.scan("Digite o nome do cliente: ");
@@ -38,7 +39,7 @@ export class Cliente {
     await new Promise((resolve, reject) => {
       connection.query(sql, (err, result) => {
         if (err) return reject(console.log("Erro ao buscar", err));
-        return resolve(console.log(result));
+        return resolve(console.table(result));
       });
     });
   }
