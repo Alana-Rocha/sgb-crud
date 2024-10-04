@@ -1,5 +1,6 @@
 import PromptSync from "prompt-sync";
 import { connection } from "../database/conexion.js";
+import dfd from "danfojs-node";
 
 export class Cliente {
   cpf;
@@ -7,9 +8,6 @@ export class Cliente {
   idade;
 
   constructor() {
-    this.cpf = "";
-    this.nome_cliente = "";
-    this.idade = 0;
     this.scan = PromptSync();
   }
 
@@ -35,12 +33,25 @@ export class Cliente {
 
   async buscarClientesDB() {
     const sql = `SELECT * FROM cliente`;
-    await new Promise((resolve, reject) => {
-      connection.query(sql, (err, result) => {
-        if (err) return reject(console.log("Erro ao buscar", err));
-        return resolve(console.table(result));
+
+    try {
+      const result = await new Promise((resolve, reject) => {
+        connection.query(sql, (err, result) => {
+          if (err) {
+            return reject(new Error("Erro ao buscar clientes: " + err.message));
+          }
+          resolve(result);
+        });
       });
-    });
+
+      const df = new dfd.DataFrame(result);
+
+      df.print();
+      
+      return df;
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   async removerClientesDB() {

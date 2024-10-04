@@ -1,5 +1,6 @@
 import PromptSync from "prompt-sync";
 import { connection } from "../database/conexion.js";
+import dfd from "danfojs-node";
 
 export class Filme {
   titulo;
@@ -28,12 +29,25 @@ export class Filme {
 
   async buscarFilmesDB() {
     const sql = `SELECT * FROM filmes`;
-    await new Promise((resolve, reject) => {
-      connection.query(sql, (err, result) => {
-        if (err) return reject(console.log("Erro ao buscar", err));
-        return resolve(console.table(result));
+
+    try {
+      const result = await new Promise((resolve, reject) => {
+        connection.query(sql, (err, result) => {
+          if (err) {
+            return reject(new Error("Erro ao buscar filmes: " + err.message));
+          }
+          resolve(result);
+        });
       });
-    });
+
+      const df = new dfd.DataFrame(result);
+
+      df.print();
+
+      return df;
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   async removerFilmesDB() {

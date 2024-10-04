@@ -1,38 +1,78 @@
+import { connection } from "../database/conexion.js";
+import PromptSync from "prompt-sync";
+import dfd from "danfojs-node";
+
 export class Sessao {
-  horario;
-  quant_assentos;
-  sala;
+  filme_id;
+  sala_id;
+  horario_inicio;
 
   constructor() {
-    this.horario = "";
-    this.quant_assentos = 0;
-    this.sala = 0;
     this.scan = PromptSync();
   }
 
   inputDados() {
-    this.horario = this.scan("Digite o Horario de inicio do filme (AAAA/MM/DD HH/MM): ");
-    this.quant_assentos = this.scan("Digite a quantidade de assentos da sala: ");
-    this.idade = +this.scan("Digite a idade: "); 
+    this.filme_id = +this.scan("Id do filme: ");
+    this.sala_id = +this.scan("Id da sala: ");
+    this.horario_inicio = this.scan(
+      "Digite o Horario de inicio do filme (DD/MM/AAAA HH/MM): "
+    );
   }
 
-  getHorario() {
-    return this.horario;
+  async escreverDadosDB() {
+    const sql = `INSERT INTO sessoes (filme_id, sala_id, horario_inicio) VALUES (?, ?, ?);`;
+
+    try {
+      const result = await new Promise((resolve, reject) => {
+        connection.query(
+          sql,
+          [this.filme_id, this.sala_id, this.horario_inicio],
+          (err, result) => {
+            if (err)
+              return reject(
+                new Error("Erro ao inserir dados da Sessao" + err.message)
+              );
+            return resolve(result);
+          }
+        );
+      });
+
+      return result;
+    } catch (error) {
+      console.error(error);
+    }
   }
 
-  getValorBilhete() {
-    return this.valor_bilhete;
-  }
+  async buscarSessoesDB() {
+    const sql = ` 
+                  SELECT
+                    filmes.titulo AS nome_filme,
+                    salas.nome AS nome_sala,
+                    sessoes.horario_inicio
+                  FROM
+                    sessoes
+                  JOIN
+                    filmes ON sessoes.filme_id = filmes.id
+                  JOIN
+                    salas ON sessoes.sala_id = salas.id;`;
 
-  getAssentos() {
-    return this.assentos;
-  }
+    try {
+      const result = await new Promise((resolve, reject) => {
+        connection.query(sql, (err, result) => {
+          if (err) {
+            return reject(new Error("Erro ao buscar Sessoes: " + err.message));
+          }
+          resolve(result);
+        });
+      });
 
-  getSala() {
-    return this.sala;
-  }
+      const df = new dfd.DataFrame(result);
 
-  toString() {
-    return `Horario: ${this.horario} \n Valor Bilhete: ${this.valor_bilhete} \n Quantidade Assentos: ${this.quant_assentos} \n Sala: ${this.sala}`;
+      df.print();
+
+      return df;
+    } catch (error) {
+      console.error(error);
+    }
   }
 }

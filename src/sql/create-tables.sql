@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS sessoes (
     id SERIAL PRIMARY KEY,
     filme_id int REFERENCES filmes(id) ON DELETE CASCADE,
     sala_id int REFERENCES salas(id) ON DELETE CASCADE,
-    horario_inicio TIMESTAMP NOT NULL
+    horario_inicio VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS poltronas (
