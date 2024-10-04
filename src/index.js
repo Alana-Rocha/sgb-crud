@@ -1,4 +1,4 @@
-import { menuInicial, menuTabelas } from "./config/menus.js";
+import { menuInicial, menuTabelas, menuTabelasAtt } from "./config/menus.js";
 import { connectDB, connection } from "./database/conexion.js";
 import { Cliente } from "./models/Cliente.js";
 import { Filme } from "./models/Filme.js";
@@ -135,9 +135,11 @@ async function removerRegistros() {
   switch (opt) {
     case 1:
       const cliente = new Cliente();
-      cliente.removerClientesDB();
+      await cliente.removerClientesDB();
       break;
     case 2:
+      const filme = new Filme();
+      await filme.removerFilmesDB();
       break;
     case 3:
       break;
@@ -155,24 +157,19 @@ async function removerRegistros() {
 }
 
 async function atualizarRegistros() {
-  menuTabelas();
+  menuTabelasAtt();
   let opt = +scan("Opção: ");
 
   switch (opt) {
     case 1:
-      const cliente = new Cliente();
+      const filme = new Filme();
+      await filme.atualizarFilmeDB();
       break;
     case 2:
       break;
     case 3:
       break;
     case 4:
-      break;
-    case 5:
-      break;
-    case 6:
-      break;
-    case 7:
       break;
     default:
       break;

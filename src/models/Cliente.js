@@ -1,7 +1,6 @@
 import PromptSync from "prompt-sync";
 import { connection } from "../database/conexion.js";
 
-
 export class Cliente {
   cpf;
   nome_cliente;
@@ -17,7 +16,7 @@ export class Cliente {
   inputDados() {
     this.cpf = this.scan("Digite o CPF: ");
     this.nome_cliente = this.scan("Digite o nome do cliente: ");
-    this.idade = +this.scan("Digite a idade: "); 
+    this.idade = +this.scan("Digite a idade: ");
   }
 
   async escreverDadosDB() {
@@ -45,6 +44,7 @@ export class Cliente {
   }
 
   async removerClientesDB() {
+    await this.buscarClientesDB();
     const cpf = this.scan("Deleter pelo CPF: ");
     const sql = `DELETE FROM cliente WHERE cpf = ?`;
     await new Promise((resolve, reject) => {

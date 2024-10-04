@@ -31,3 +31,14 @@ export function menuAtualizaCliente() {
     7 - Voltar \n
   `);
 }
+
+
+export function menuTabelasAtt() {
+  console.log(`
+    \n
+    1 - Filmes
+    2 - Salas
+    3 - Sessoes
+    4 - Voltar \n
+  `);
+}
