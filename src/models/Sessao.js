@@ -46,6 +46,7 @@ export class Sessao {
   async buscarSessoesDB() {
     const sql = ` 
                   SELECT
+                    sessoes.id,
                     filmes.titulo AS nome_filme,
                     salas.nome AS nome_sala,
                     sessoes.horario_inicio
@@ -71,6 +72,33 @@ export class Sessao {
       df.print();
 
       return df;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async selecioanrSessao(id) {
+    const sql = `SELECT sala_id FROM sessoes WHERE id = ${id}`;
+
+    try {
+      const result = await new Promise((resolve, reject) => {
+        connection.query(sql, (err, result) => {
+          if (err) {
+            return reject(new Error("Erro ao buscar poltronas " + err));
+          }
+          resolve(result);
+        });
+      });
+
+      if (result.length > 0) {
+        const sala_id = result[0].sala_id;
+        console.log("sala_id:", sala_id);
+
+        return sala_id;
+      } else {
+        console.log("Nenhuma sala encontrada para o id fornecido.");
+        return null; // Retorna null se não houver resultado
+      }
     } catch (error) {
       console.error(error);
     }

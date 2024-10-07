@@ -149,15 +149,24 @@ async function inserirRegistros() {
       console.log("\nSESSÕES");
       await sessao.buscarSessoesDB();
 
+      let sessaoId = +scan("Escolha o Id da Sessão: ");
+      const sala_id = await sessao.selecioanrSessao(sessaoId);
+
       console.log("\nPOLTRONAS");
-      await poltrona.buscarPoltronasDB();
+      await poltrona.selecionarPoltronas(sala_id);
+
+      let poltronaId = +scan("Escolha o Id da Poltrona: ");
 
       console.log("\nCLIENTE");
       await cliente.buscarClientesDB();
 
-      ingresso.inputDados();
+      let clienteCpf = scan("Escolha o CPF do Cliente: ");
+
+      ingresso.inputDados(sessaoId, poltronaId, clienteCpf);
 
       await ingresso.escreverDadosDB();
+
+      await poltrona.ocuparPoltrona(poltronaId);
       break;
 
     case 4:
