@@ -35,16 +35,18 @@ export class Ingresso {
 
   async buscarIngressosDB() {
     const sql = `
-             SELECT 
-                sessoes.file_id,          
-                cliente.nome_cliente,         
-                poltronas.numero_poltrona     
-             FROM ingressos
-             JOIN sessoes ON ingressos.sessao_id = sessoes.id          
-             JOIN cliente ON ingressos.cpf_cliente = cliente.cpf        
-             JOIN poltronas ON ingressos.poltrona_id = poltronas.id    
-                         
-`;
+            SELECT 
+              ingressos.id AS id_ingresso,             
+              cliente.nome_cliente,                      
+              poltronas.numero_poltrona,                 
+              filmes.titulo AS nome_filme,               
+              sessoes.horario_inicio                     
+            FROM ingressos
+            JOIN cliente ON ingressos.cpf_cliente = cliente.cpf         
+            JOIN poltronas ON ingressos.poltrona_id = poltronas.id       
+            JOIN sessoes ON ingressos.sessao_id = sessoes.id            
+            JOIN filmes ON sessoes.filme_id = filmes.id;                 
+ `;
 
     try {
       const result = await new Promise((resolve, reject) => {

@@ -142,6 +142,7 @@ async function inserirRegistros() {
       break;
 
     case 2:
+      filme.inputDados();
       await filme.escreverDadosDB();
       break;
 
@@ -164,9 +165,13 @@ async function inserirRegistros() {
 
       ingresso.inputDados(sessaoId, poltronaId, clienteCpf);
 
+      if ((await poltrona.ocuparPoltrona(poltronaId)) === false) {
+        console.log("\nCadeira já está ocupada...\n");
+        break;
+      }
+
       await ingresso.escreverDadosDB();
 
-      await poltrona.ocuparPoltrona(poltronaId);
       break;
 
     case 4:
