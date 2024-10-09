@@ -69,4 +69,22 @@ export class Ingresso {
       console.error(error);
     }
   }
+
+  async removerIngresso() {
+    await this.buscarIngressosDB();
+    const id = this.scan("Deleter pelo Id do Ingresso: ");
+    const sql = `DELETE FROM ingressos WHERE id = ?`;
+
+    try {
+      await new Promise((resolve, reject) => {
+        connection.query(sql, [id], (err, result) => {
+          if (err) return reject(console.log("Erro ao deletar", err));
+
+          resolve("Ingresso Excluido");
+        });
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  }
 }

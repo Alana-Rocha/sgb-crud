@@ -13,13 +13,17 @@ export const connection = mysql.createConnection({
 });
 
 export async function connectDB() {
-  await new Promise((resolve, reject) => {
-    connection.connect((err) => {
-      if (err) {
-        return reject("Erro ao conectar ao banco de dados: " + err);
-      }
-      console.log("CONECTADO");
-      resolve("Conectado");
+  try {
+    await new Promise((resolve, reject) => {
+      connection.connect((err) => {
+        if (err) {
+          return reject("Erro ao conectar ao banco de dados: " + err);
+        }
+        console.log("CONECTADO");
+        resolve("Conectado");
+      });
     });
-  });
+  } catch (error) {
+    console.error(error);
+  }
 }

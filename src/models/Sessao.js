@@ -103,4 +103,22 @@ export class Sessao {
       console.error(error);
     }
   }
+
+  async removerSessao() {
+    await this.buscarSessoesDB();
+    const id = this.scan("Deleter pelo Id da Sessao: ");
+    const sql = `DELETE FROM sessoes WHERE id = ?`;
+
+    try {
+      await new Promise((resolve, reject) => {
+        connection.query(sql, [id], (err, result) => {
+          if (err) return reject(console.log("Erro ao deletar", err));
+  
+          resolve("Sessao Excluida");
+        });
+      });
+    } catch(error) {
+      console.error(error)
+    }
+  }
 }

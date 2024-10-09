@@ -25,12 +25,11 @@ export function menuInicial() {
 export function menuTabelas() {
   console.log(`
     1 - Cliente
-    2 - Filmes
-    3 - Ingressos
-    4 - Poltronas
-    5 - Salas
-    6 - Sessoes
-    7 - Voltar 
+    2 - Filme
+    3 - Ingresso
+    4 - Salas
+    5 - Sessao
+    6 - Voltar 
   `);
 }
 
@@ -42,6 +41,17 @@ export function menuAtualizaCliente() {
     3 - Idade
     7 - Voltar \n
   `);
+}
+
+export function menuInserirEremover() {
+  console.log(`
+    \nINSERIR DADOS\n   
+    1 - Cliente
+    2 - Filme
+    3 - Ingresso
+    4 - Sessao
+    5 - Voltar
+    `);
 }
 
 export function menuTabelasAtt() {

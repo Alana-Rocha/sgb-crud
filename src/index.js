@@ -1,4 +1,9 @@
-import { menuInicial, menuTabelas, menuTabelasAtt } from "./config/menus.js";
+import {
+  menuInicial,
+  menuInserirEremover,
+  menuTabelas,
+  menuTabelasAtt,
+} from "./config/menus.js";
 import { connectDB, connection } from "./database/conexion.js";
 import { Cliente } from "./models/Cliente.js";
 import { Filme } from "./models/Filme.js";
@@ -26,6 +31,18 @@ async function main() {
       switch (opt) {
         case 1:
           await relatorios();
+
+          opt2 = +scan(
+            "Deseja ver relatórios novamente? (1 - Sim | 2 - Não): "
+          );
+
+          while (opt2 === 1) {
+            await relatorios();
+            opt2 = +scan(
+              "Deseja ver relatórios novamente? (1 - Sim | 2 - Não): "
+            );
+          }
+
           scan("Enter para continuar...");
           console.clear();
           break;
@@ -104,18 +121,14 @@ async function relatorios() {
       break;
 
     case 4:
-      await poltrona.buscarPoltronasDB();
-      break;
-
-    case 5:
       await sala.buscarSalasDB();
       break;
 
-    case 6:
+    case 5:
       await sessao.buscarSessoesDB();
       break;
 
-    case 7:
+    case 6:
       break;
 
     default:
@@ -131,7 +144,7 @@ async function inserirRegistros() {
   const ingresso = new Ingresso();
   const poltrona = new Poltrona();
 
-  menuTabelas();
+  menuInserirEremover();
 
   let opt = +scan("Opção: ");
 
@@ -175,12 +188,6 @@ async function inserirRegistros() {
       break;
 
     case 4:
-      break;
-
-    case 5:
-      break;
-
-    case 6:
       console.log("\nFILMES");
 
       await filme.buscarFilmesDB();
@@ -192,6 +199,48 @@ async function inserirRegistros() {
       sessao.inputDados();
 
       await sessao.escreverDadosDB();
+
+      break;
+
+    case 5:
+      break;
+
+    default:
+      break;
+  }
+}
+
+async function removerRegistros() {
+  const cliente = new Cliente();
+  const filme = new Filme();
+  const ingresso = new Ingresso();
+  const sessao = new Sessao();
+
+  menuInserirEremover();
+
+  let opt = +scan("Opção: ");
+
+  switch (opt) {
+    case 1:
+      await cliente.removerClientesDB();
+      break;
+
+    case 2:
+      await filme.removerFilmesDB();
+      break;
+
+    case 3:
+      await ingresso.removerIngresso();
+      break;
+
+    case 4:
+      await sessao.removerSessao();
+      break;
+
+    case 5:
+      break;
+
+    case 6:
       break;
 
     case 7:
@@ -202,67 +251,30 @@ async function inserirRegistros() {
   }
 }
 
-// async function removerRegistros() {
-//   const cliente = new Cliente();
-//   const filme = new Filme();
+async function atualizarRegistros() {
+  const filme = new Filme();
 
-//   menuTabelas();
+  menuTabelasAtt();
 
-//   let opt = +scan("Opção: ");
+  let opt = +scan("Opção: ");
 
-//   switch (opt) {
-//     case 1:
-//       await cliente.removerClientesDB();
-//       break;
+  switch (opt) {
+    case 1:
+      await filme.atualizarFilmeDB();
+      break;
 
-//     case 2:
-//       await filme.removerFilmesDB();
-//       break;
+    case 2:
+      break;
 
-//     case 3:
-//       break;
+    case 3:
+      break;
 
-//     case 4:
-//       break;
+    case 4:
+      break;
 
-//     case 5:
-//       break;
-
-//     case 6:
-//       break;
-
-//     case 7:
-//       break;
-
-//     default:
-//       break;
-//   }
-// }
-
-// async function atualizarRegistros() {
-//   const filme = new Filme();
-
-//   menuTabelasAtt();
-
-//   let opt = +scan("Opção: ");
-
-//   switch (opt) {
-//     case 1:
-//       await filme.atualizarFilmeDB();
-//       break;
-
-//     case 2:
-//       break;
-
-//     case 3:
-//       break;
-
-//     case 4:
-//       break;
-
-//     default:
-//       break;
-//   }
-// }
+    default:
+      break;
+  }
+}
 
 main();
