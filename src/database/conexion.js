@@ -1,5 +1,5 @@
-import mysql from "mysql2";
 import dotenv from "dotenv";
+import mysql from "mysql2";
 
 dotenv.config();
 
@@ -16,14 +16,15 @@ export async function connectDB() {
   try {
     await new Promise((resolve, reject) => {
       connection.connect((err) => {
+        console.log(err);
         if (err) {
-          return reject("Erro ao conectar ao banco de dados: " + err);
+          return reject("Erro ao conectar ao banco de dados: " + err.message);
         }
         console.log("CONECTADO");
         resolve("Conectado");
       });
     });
   } catch (error) {
-    console.error(error);
+    console.error(error.message);
   }
 }

@@ -1,8 +1,8 @@
-import { connection } from "../database/conexion.js";
 import dfd from "danfojs-node";
+import { connection } from "../database/conexion.js";
 
 export class Sala {
-  async buscarSalasDB() {
+  async buscarSalas() {
     const sql = `SELECT * FROM salas`;
 
     try {

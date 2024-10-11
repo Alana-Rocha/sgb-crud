@@ -1,6 +1,6 @@
+import dfd from "danfojs-node";
 import PromptSync from "prompt-sync";
 import { connection } from "../database/conexion.js";
-import dfd from "danfojs-node";
 
 export class Filme {
   titulo;
@@ -17,7 +17,7 @@ export class Filme {
     this.genero = this.scan("Gênero do filme: ");
   }
 
-  async escreverDadosDB() {
+  async inserirDadosFilme() {
     const sql = `INSERT INTO filmes (titulo, duracao, genero) VALUES (?, ?, ?)`;
     await new Promise((resolve, reject) => {
       connection.query(sql, [this.titulo, this.duracao, this.genero], (err) => {
@@ -27,7 +27,7 @@ export class Filme {
     });
   }
 
-  async buscarFilmesDB() {
+  async buscarFilme() {
     const sql = `SELECT * FROM filmes`;
 
     try {
@@ -50,21 +50,20 @@ export class Filme {
     }
   }
 
-  async removerFilmesDB() {
-    await this.buscarFilmesDB();
+  async removerFilme() {
+    await this.buscarFilme();
     const id = this.scan("Deleter pelo Id do filme: ");
     const sql = `DELETE FROM filmes WHERE id = ?`;
     await new Promise((resolve, reject) => {
       connection.query(sql, [id], (err, result) => {
         if (err) return reject(console.log("Erro ao deletar", err));
-
-        return resolve("filme excluido");
+        return resolve("filme excluido com sucesso");
       });
     });
   }
 
-  async atualizarFilmeDB() {
-    await this.buscarFilmesDB();
+  async atualizarDadosFilme() {
+    await this.buscarFilme();
     const id = this.scan("Atualizar pelo Id do filme: ");
 
     const attTitulo = this.scan("Titulo do filme: ");

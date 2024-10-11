@@ -1,7 +1,6 @@
-import { error } from "console";
-import { connection } from "../database/conexion.js";
 import dfd from "danfojs-node";
 import PromptSync from "prompt-sync";
+import { connection } from "../database/conexion.js";
 
 export class Ingresso {
   sessao_id;
@@ -18,7 +17,7 @@ export class Ingresso {
     this.cpf_cliente = cliente;
   }
 
-  async escreverDadosDB() {
+  async inserirDadosIngresso() {
     const sql = `INSERT INTO ingressos (sessao_id, poltrona_id, cpf_cliente) VALUES (?, ?, ?)`;
 
     await new Promise((resolve, reject) => {
@@ -33,7 +32,7 @@ export class Ingresso {
     });
   }
 
-  async buscarIngressosDB() {
+  async buscarIngressos() {
     const sql = `
             SELECT 
               ingressos.id AS id_ingresso,             
@@ -71,7 +70,7 @@ export class Ingresso {
   }
 
   async removerIngresso() {
-    await this.buscarIngressosDB();
+    await this.buscarIngressos();
     const id = this.scan("Deleter pelo Id do Ingresso: ");
     const sql = `DELETE FROM ingressos WHERE id = ?`;
 

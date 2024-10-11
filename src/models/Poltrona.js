@@ -2,7 +2,7 @@ import { connection } from "../database/conexion.js";
 import dfd from "danfojs-node";
 
 export class Poltrona {
-  async buscarPoltronasDB() {
+  async buscarPoltronas() {
     const sql = `SELECT * FROM poltronas`;
 
     try {

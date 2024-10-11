@@ -109,23 +109,23 @@ async function relatorios() {
 
   switch (opt) {
     case 1:
-      await cliente.buscarClientesDB();
+      await cliente.buscarCliente();
       break;
 
     case 2:
-      await filme.buscarFilmesDB();
+      await filme.buscarFilme();
       break;
 
     case 3:
-      await ingresso.buscarIngressosDB();
+      await ingresso.buscarIngressos();
       break;
 
     case 4:
-      await sala.buscarSalasDB();
+      await sala.buscarSalas();
       break;
 
     case 5:
-      await sessao.buscarSessoesDB();
+      await sessao.buscarSessoes();
       break;
 
     case 6:

@@ -1,6 +1,6 @@
+import dfd from "danfojs-node";
 import PromptSync from "prompt-sync";
 import { connection } from "../database/conexion.js";
-import dfd from "danfojs-node";
 
 export class Cliente {
   cpf;
@@ -17,21 +17,21 @@ export class Cliente {
     this.idade = +this.scan("Digite a idade: ");
   }
 
-  async escreverDadosDB() {
+  async inserirDadosCliente() {
     const sql = `INSERT INTO cliente (cpf, nome_cliente, idade) VALUES (?, ?, ?)`;
     await new Promise((resolve, reject) => {
       connection.query(
         sql,
         [this.cpf, this.nome_cliente, this.idade],
         (err) => {
-          if (err) return reject("Erro ao inserir dados do cliente", err);
+          if (err) return reject("Cliente já registrado", err);
           return resolve("Cliente inserido");
         }
       );
     });
   }
 
-  async buscarClientesDB() {
+  async buscarCliente() {
     const sql = `SELECT * FROM cliente`;
 
     try {
@@ -47,15 +47,15 @@ export class Cliente {
       const df = new dfd.DataFrame(result);
 
       df.print();
-      
+
       return df;
     } catch (error) {
       console.error(error);
     }
   }
 
-  async removerClientesDB() {
-    await this.buscarClientesDB();
+  async removerCliente() {
+    await this.buscarCliente();
     const cpf = this.scan("Deleter pelo CPF: ");
     const sql = `DELETE FROM cliente WHERE cpf = ?`;
     await new Promise((resolve, reject) => {

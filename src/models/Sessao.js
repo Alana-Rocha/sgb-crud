@@ -1,6 +1,6 @@
-import { connection } from "../database/conexion.js";
-import PromptSync from "prompt-sync";
 import dfd from "danfojs-node";
+import PromptSync from "prompt-sync";
+import { connection } from "../database/conexion.js";
 
 export class Sessao {
   filme_id;
@@ -19,7 +19,7 @@ export class Sessao {
     );
   }
 
-  async escreverDadosDB() {
+  async inserirDadosSessao() {
     const sql = `INSERT INTO sessoes (filme_id, sala_id, horario_inicio) VALUES (?, ?, ?);`;
 
     try {
@@ -43,7 +43,7 @@ export class Sessao {
     }
   }
 
-  async buscarSessoesDB() {
+  async buscarSessoes() {
     const sql = ` 
                   SELECT
                     sessoes.id,
@@ -97,7 +97,7 @@ export class Sessao {
         return sala_id;
       } else {
         console.log("Nenhuma sala encontrada para o id fornecido.");
-        return null; // Retorna null se não houver resultado
+        return null;
       }
     } catch (error) {
       console.error(error);
@@ -105,7 +105,7 @@ export class Sessao {
   }
 
   async removerSessao() {
-    await this.buscarSessoesDB();
+    await this.buscarSessoes();
     const id = this.scan("Deleter pelo Id da Sessao: ");
     const sql = `DELETE FROM sessoes WHERE id = ?`;
 
@@ -113,12 +113,12 @@ export class Sessao {
       await new Promise((resolve, reject) => {
         connection.query(sql, [id], (err, result) => {
           if (err) return reject(console.log("Erro ao deletar", err));
-  
+
           resolve("Sessao Excluida");
         });
       });
-    } catch(error) {
-      console.error(error)
+    } catch (error) {
+      console.error(error);
     }
   }
 }
