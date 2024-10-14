@@ -1,10 +1,4 @@
 import PromptSync from "prompt-sync";
-import {
-  menuInicial,
-  menuInserirEremover,
-  menuTabelas,
-  menuTabelasAtt,
-} from "./utils/menus.js";
 import { connectDB, connection } from "./database/conexion.js";
 import { Cliente } from "./models/clientes.js";
 import { Filme } from "./models/filmes.js";
@@ -13,6 +7,12 @@ import { Poltrona } from "./models/poltronas.js";
 import { Sala } from "./models/salas.js";
 import { Sessao } from "./models/sessoes.js";
 import { executeSqlFile } from "./queries/query.js";
+import {
+  menuInicial,
+  menuInserirEremover,
+  menuTabelas,
+  menuTabelasAtt,
+} from "./utils/menus.js";
 
 const scan = PromptSync();
 

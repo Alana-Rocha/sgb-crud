@@ -12,8 +12,13 @@ export class Cliente {
     this.scan = PromptSync();
   }
 
-  inputDados() {
+  async inputDados() {
     this.cpf = this.scan("Digite o CPF: ");
+    const cliente = await this.buscarClienteCpf(this.cpf);
+    if (cliente) {
+      console.log("Cliente já registrado.");
+      return;
+    }
     this.nome_cliente = this.scan("Digite o nome do cliente: ");
     this.idade = +this.scan("Digite a idade: ");
   }
@@ -64,6 +69,25 @@ export class Cliente {
     df.print();
 
     return df;
+  }
+
+  async buscarClienteCpf(cpf) {
+    const sql = `SELECT * FROM cliente WHERE = "${cpf}"`;
+
+    const [err, result] = await to(
+      new Promise((resolve, reject) => {
+        connection.query(sql, (err, result) => {
+          if (err) {
+            return reject(new Error("Erro ao buscar clientes: " + err.message));
+          }
+          resolve(result);
+        });
+      })
+    );
+
+    console.log(result);
+
+    return result;
   }
 
   async removerCliente() {
