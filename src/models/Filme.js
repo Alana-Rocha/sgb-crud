@@ -1,6 +1,7 @@
 import dfd from "danfojs-node";
 import PromptSync from "prompt-sync";
 import { connection } from "../database/conexion.js";
+import { to } from "../utils/errorHandler.js";
 
 export class Filme {
   titulo;
@@ -16,50 +17,75 @@ export class Filme {
     this.duracao = +this.scan("Duração do filme: ");
     this.genero = this.scan("Gênero do filme: ");
   }
-
   async inserirDadosFilme() {
     const sql = `INSERT INTO filmes (titulo, duracao, genero) VALUES (?, ?, ?)`;
-    await new Promise((resolve, reject) => {
-      connection.query(sql, [this.titulo, this.duracao, this.genero], (err) => {
-        if (err) return reject("Erro ao inserir dados do filme", err);
-        return resolve("Cliente inserido");
-      });
-    });
+
+    const [err] = await to(
+      new Promise((resolve, reject) => {
+        connection.query(
+          sql,
+          [this.titulo, this.duracao, this.genero],
+          (err) => {
+            if (err) return reject("Erro ao inserir dados do filme");
+            return resolve("Filme inserido com sucesso!");
+          }
+        );
+      })
+    );
+
+    if (err) {
+      console.error(err);
+      return;
+    }
+
+    console.log("Filme inserido com sucesso!");
   }
 
   async buscarFilme() {
     const sql = `SELECT * FROM filmes`;
 
-    try {
-      const result = await new Promise((resolve, reject) => {
+    const [err, result] = await to(
+      new Promise((resolve, reject) => {
         connection.query(sql, (err, result) => {
           if (err) {
             return reject(new Error("Erro ao buscar filmes: " + err.message));
           }
           resolve(result);
         });
-      });
+      })
+    );
 
-      const df = new dfd.DataFrame(result);
-
-      df.print();
-
-      return df;
-    } catch (error) {
-      console.error(error);
+    if (err) {
+      console.error(err);
+      return;
     }
+
+    const df = new dfd.DataFrame(result);
+    df.print();
+
+    return df;
   }
 
   async removerFilme() {
     await this.buscarFilme();
-    const id = this.scan("Deleter pelo Id do filme: ");
+    const id = this.scan("Deletar pelo Id do filme: ");
     const sql = `DELETE FROM filmes WHERE id = ?`;
-    await new Promise((resolve, reject) => {
-      connection.query(sql, [id], (err, result) => {
-        if (err) return reject(console.log("Erro ao deletar", err));
-        return resolve("filme excluido com sucesso");
-      });
-    });
+
+    const [err] = await to(
+      new Promise((resolve, reject) => {
+        connection.query(sql, [id], (err) => {
+          if (err) return reject("Erro ao deletar filme");
+          return resolve("Filme excluído com sucesso!");
+        });
+      })
+    );
+
+    if (err) {
+      console.error(err);
+      return;
+    }
+
+    console.log("Filme excluído com sucesso!");
   }
 
   async atualizarDadosFilme() {
@@ -78,11 +104,20 @@ export class Filme {
                 WHERE id = ?; 
                      `;
 
-    await new Promise((resolve, reject) => {
-      connection.query(sql, [attTitulo, attDuracao, attGenero, id], (err) => {
-        if (err) return reject(console.log("Erro ao atualizar filme" + err));
-        return resolve(console.log("Filme atualizado"));
-      });
-    });
+    const [err] = await to(
+      new Promise((resolve, reject) => {
+        connection.query(sql, [attTitulo, attDuracao, attGenero, id], (err) => {
+          if (err) return reject("Erro ao atualizar filme");
+          return resolve("Filme atualizado com sucesso!");
+        });
+      })
+    );
+
+    if (err) {
+      console.error(err);
+      return;
+    }
+
+    console.log("Filme atualizado com sucesso!");
   }
 }

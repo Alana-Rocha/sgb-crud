@@ -1,6 +1,7 @@
 import dfd from "danfojs-node";
 import PromptSync from "prompt-sync";
 import { connection } from "../database/conexion.js";
+import { to } from "../utils/errorHandler.js";
 
 export class Ingresso {
   sessao_id;
@@ -20,16 +21,28 @@ export class Ingresso {
   async inserirDadosIngresso() {
     const sql = `INSERT INTO ingressos (sessao_id, poltrona_id, cpf_cliente) VALUES (?, ?, ?)`;
 
-    await new Promise((resolve, reject) => {
-      connection.query(
-        sql,
-        [this.sessao_id, this.poltrona_id, this.cpf_cliente],
-        (err) => {
-          if (err) return reject("Erro ao inserir dados do ingresso" + err);
-          return resolve("Ingresso inserido");
-        }
-      );
-    });
+    const [err] = await to(
+      new Promise((resolve, reject) => {
+        connection.query(
+          sql,
+          [this.sessao_id, this.poltrona_id, this.cpf_cliente],
+          (err) => {
+            if (err)
+              return reject(
+                "Erro ao inserir dados do ingresso: " + err.message
+              );
+            return resolve("Ingresso inserido com sucesso!");
+          }
+        );
+      })
+    );
+
+    if (err) {
+      console.error(err);
+      return;
+    }
+
+    console.log("Ingresso inserido com sucesso!");
   }
 
   async buscarIngressos() {
@@ -45,45 +58,51 @@ export class Ingresso {
             JOIN poltronas ON ingressos.poltrona_id = poltronas.id       
             JOIN sessoes ON ingressos.sessao_id = sessoes.id            
             JOIN filmes ON sessoes.filme_id = filmes.id;                 
- `;
+    `;
 
-    try {
-      const result = await new Promise((resolve, reject) => {
+    const [err, result] = await to(
+      new Promise((resolve, reject) => {
         connection.query(sql, (err, result) => {
           if (err) {
             return reject(
-              new Error("Erro ao buscar Ingressos: " + err.message)
+              new Error("Erro ao buscar ingressos: " + err.message)
             );
           }
           resolve(result);
         });
-      });
+      })
+    );
 
-      const df = new dfd.DataFrame(result);
-
-      df.print();
-
-      return df;
-    } catch (error) {
-      console.error(error);
+    if (err) {
+      console.error(err);
+      return;
     }
+
+    const df = new dfd.DataFrame(result);
+    df.print();
+
+    return df;
   }
 
   async removerIngresso() {
     await this.buscarIngressos();
-    const id = this.scan("Deleter pelo Id do Ingresso: ");
+    const id = this.scan("Deletar pelo Id do Ingresso: ");
     const sql = `DELETE FROM ingressos WHERE id = ?`;
 
-    try {
-      await new Promise((resolve, reject) => {
-        connection.query(sql, [id], (err, result) => {
-          if (err) return reject(console.log("Erro ao deletar", err));
-
-          resolve("Ingresso Excluido");
+    const [err] = await to(
+      new Promise((resolve, reject) => {
+        connection.query(sql, [id], (err) => {
+          if (err) return reject("Erro ao deletar ingresso: " + err.message);
+          return resolve("Ingresso excluído com sucesso!");
         });
-      });
-    } catch (error) {
-      console.error(error);
+      })
+    );
+
+    if (err) {
+      console.error(err);
+      return;
     }
+
+    console.log("Ingresso excluído com sucesso!");
   }
 }

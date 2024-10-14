@@ -151,20 +151,20 @@ async function inserirRegistros() {
   switch (opt) {
     case 1:
       cliente.inputDados();
-      await cliente.escreverDadosDB();
+      await cliente.inserirDadosCliente();
       break;
 
     case 2:
       filme.inputDados();
-      await filme.escreverDadosDB();
+      await filme.inserirDadosFilme();
       break;
 
     case 3:
       console.log("\nSESSÕES");
-      await sessao.buscarSessoesDB();
+      await sessao.buscarSessoes();
 
       let sessaoId = +scan("Escolha o Id da Sessão: ");
-      const sala_id = await sessao.selecioanrSessao(sessaoId);
+      const sala_id = await sessao.selecionarSessao(sessaoId);
 
       console.log("\nPOLTRONAS");
       await poltrona.selecionarPoltronas(sala_id);
@@ -172,7 +172,7 @@ async function inserirRegistros() {
       let poltronaId = +scan("Escolha o Id da Poltrona: ");
 
       console.log("\nCLIENTE");
-      await cliente.buscarClientesDB();
+      await cliente.buscarCliente();
 
       let clienteCpf = scan("Escolha o CPF do Cliente: ");
 
@@ -183,22 +183,22 @@ async function inserirRegistros() {
         break;
       }
 
-      await ingresso.escreverDadosDB();
+      await ingresso.inserirDadosIngresso();
 
       break;
 
     case 4:
       console.log("\nFILMES");
 
-      await filme.buscarFilmesDB();
+      await filme.buscarFilme();
 
       console.log("\nSALAS");
 
-      await sala.buscarSalasDB();
+      await sala.buscarSalas();
 
       sessao.inputDados();
 
-      await sessao.escreverDadosDB();
+      await sessao.inserirDadosSessao();
 
       break;
 
@@ -222,11 +222,11 @@ async function removerRegistros() {
 
   switch (opt) {
     case 1:
-      await cliente.removerClientesDB();
+      await cliente.removerCliente();
       break;
 
     case 2:
-      await filme.removerFilmesDB();
+      await filme.removerFilme();
       break;
 
     case 3:
@@ -260,7 +260,7 @@ async function atualizarRegistros() {
 
   switch (opt) {
     case 1:
-      await filme.atualizarFilmeDB();
+      await filme.atualizarDadosFilme();
       break;
 
     case 2:

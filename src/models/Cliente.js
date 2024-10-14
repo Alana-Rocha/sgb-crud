@@ -1,6 +1,7 @@
 import dfd from "danfojs-node";
 import PromptSync from "prompt-sync";
 import { connection } from "../database/conexion.js";
+import { to } from "../utils/errorHandler.js";
 
 export class Cliente {
   cpf;
@@ -19,51 +20,72 @@ export class Cliente {
 
   async inserirDadosCliente() {
     const sql = `INSERT INTO cliente (cpf, nome_cliente, idade) VALUES (?, ?, ?)`;
-    await new Promise((resolve, reject) => {
-      connection.query(
-        sql,
-        [this.cpf, this.nome_cliente, this.idade],
-        (err) => {
-          if (err) return reject("Cliente já registrado", err);
-          return resolve("Cliente inserido");
-        }
-      );
-    });
+
+    const [err] = await to(
+      new Promise((resolve, reject) => {
+        connection.query(
+          sql,
+          [this.cpf, this.nome_cliente, this.idade],
+          (err) => {
+            if (err) return reject("Cliente já registrado");
+            return resolve("Cliente inserido");
+          }
+        );
+      })
+    );
+
+    if (err) {
+      console.error(err);
+      return;
+    }
+    console.log("Cliente inserido com sucesso!");
   }
 
   async buscarCliente() {
     const sql = `SELECT * FROM cliente`;
 
-    try {
-      const result = await new Promise((resolve, reject) => {
+    const [err, result] = await to(
+      new Promise((resolve, reject) => {
         connection.query(sql, (err, result) => {
           if (err) {
             return reject(new Error("Erro ao buscar clientes: " + err.message));
           }
           resolve(result);
         });
-      });
+      })
+    );
 
-      const df = new dfd.DataFrame(result);
-
-      df.print();
-
-      return df;
-    } catch (error) {
-      console.error(error);
+    if (err) {
+      console.error(err);
+      return;
     }
+
+    const df = new dfd.DataFrame(result);
+    df.print();
+
+    return df;
   }
 
   async removerCliente() {
     await this.buscarCliente();
+
     const cpf = this.scan("Deleter pelo CPF: ");
     const sql = `DELETE FROM cliente WHERE cpf = ?`;
-    await new Promise((resolve, reject) => {
-      connection.query(sql, [cpf], (err, result) => {
-        if (err) return reject(console.log("Erro ao deleter", err));
 
-        return resolve("cliente excluido");
-      });
-    });
+    const [err] = await to(
+      new Promise((resolve, reject) => {
+        connection.query(sql, [cpf], (err) => {
+          if (err) return reject("Erro ao deletar o cliente");
+          return resolve("Cliente excluído com sucesso!");
+        });
+      })
+    );
+
+    if (err) {
+      console.error(err);
+      return;
+    }
+
+    console.log("Cliente excluído com sucesso!");
   }
 }
