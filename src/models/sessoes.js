@@ -12,7 +12,7 @@ export class Sessao {
     this.scan = PromptSync();
   }
 
-  inputDados() {
+  inputDadosSessao() {
     this.filme_id = +this.scan("Id do filme: ");
     this.sala_id = +this.scan("Id da sala: ");
     this.horario_inicio = this.scan(

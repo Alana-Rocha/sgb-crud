@@ -12,10 +12,10 @@ export class Filme {
     this.scan = PromptSync();
   }
 
-  inputDados() {
+  inputDadosFilme() {
     this.titulo = this.scan("Titulo do filme: ");
     this.duracao = +this.scan("Duração do filme: ");
-    this.genero = this.scan("Gênero do filme: ");
+    this.genero = this.scan("Gênero do filme(Ex: Terror): ");
   }
   async inserirDadosFilme() {
     const sql = `INSERT INTO filmes (titulo, duracao, genero) VALUES (?, ?, ?)`;
@@ -68,7 +68,7 @@ export class Filme {
 
   async removerFilme() {
     await this.buscarFilme();
-    const id = this.scan("Deletar pelo Id do filme: ");
+    const id = this.scan("Insira o ID do filme que deseja remover: ");
     const sql = `DELETE FROM filmes WHERE id = ?`;
 
     const [err] = await to(

@@ -73,9 +73,20 @@ export function menuAtualizaCliente() {
   `);
 }
 
-export function menuInserirEremover() {
+export function menuInserirRegistro() {
   console.log(`
     \nEscolha uma opção para inserir um registro:\n   
+    1 - Cliente
+    2 - Filme
+    3 - Ingresso
+    4 - Sessao
+    5 - Voltar
+    `);
+}
+
+export function menuRemoverRegistro() {
+  console.log(`
+    \nEscolha uma opção para remover um registro:\n   
     1 - Cliente
     2 - Filme
     3 - Ingresso

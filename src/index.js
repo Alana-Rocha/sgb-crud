@@ -2,14 +2,15 @@ import PromptSync from "prompt-sync";
 import { connectDB, connection } from "./database/conexion.js";
 import { Cliente } from "./models/clientes.js";
 import { Filme } from "./models/filmes.js";
-import { Ingresso } from "./models/ingressos.js";
-import { Poltrona } from "./models/poltronas.js";
-import { Sala } from "./models/salas.js";
+import { Ingresso } from "./models/Ingressos.js";
+import { Poltrona } from "./models/Poltronas.js";
+import { Sala } from "./models/Salas.js";
 import { Sessao } from "./models/sessoes.js";
 import { executeSqlFile } from "./queries/query.js";
 import {
   menuInicial,
-  menuInserirEremover,
+menuRemoverRegistro,
+  menuInserirRegistro,
   menuTabelas,
   menuTabelasAtt,
 } from "./utils/menus.js";
@@ -144,18 +145,18 @@ async function inserirRegistros() {
   const ingresso = new Ingresso();
   const poltrona = new Poltrona();
 
-  menuInserirEremover();
+  menuInserirRegistro();
 
   let opt = +scan("Opção: ");
 
   switch (opt) {
     case 1:
-      cliente.inputDados();
+      cliente.inputDadosCliente();
       await cliente.inserirDadosCliente();
       break;
 
     case 2:
-      filme.inputDados();
+      filme.inputDadosFilme();
       await filme.inserirDadosFilme();
       break;
 
@@ -196,7 +197,7 @@ async function inserirRegistros() {
 
       await sala.buscarSalas();
 
-      sessao.inputDados();
+      sessao.inputDadosSessao();
 
       await sessao.inserirDadosSessao();
 
@@ -216,7 +217,7 @@ async function removerRegistros() {
   const ingresso = new Ingresso();
   const sessao = new Sessao();
 
-  menuInserirEremover();
+  menuRemoverRegistro();
 
   let opt = +scan("Opção: ");
 

@@ -12,7 +12,7 @@ export class Cliente {
     this.scan = PromptSync();
   }
 
-  async inputDados() {
+  async inputDadosCliente() {
     this.cpf = this.scan("Digite o CPF: ");
     const cliente = await this.buscarClienteCpf(this.cpf);
     if (cliente) {
@@ -25,24 +25,11 @@ export class Cliente {
 
   async inserirDadosCliente() {
     const sql = `INSERT INTO cliente (cpf, nome_cliente, idade) VALUES (?, ?, ?)`;
-
     const [err] = await to(
-      new Promise((resolve, reject) => {
-        connection.query(
-          sql,
-          [this.cpf, this.nome_cliente, this.idade],
-          (err) => {
-            if (err) return reject("Cliente já registrado");
-            return resolve("Cliente inserido");
-          }
-        );
+      new Promise((resolve, _) => {
+        connection.query(sql, [this.cpf, this.nome_cliente, this.idade]);
       })
     );
-
-    if (err) {
-      console.error(err);
-      return;
-    }
     console.log("Cliente inserido com sucesso!");
   }
 
@@ -72,7 +59,7 @@ export class Cliente {
   }
 
   async buscarClienteCpf(cpf) {
-    const sql = `SELECT * FROM cliente WHERE = "${cpf}"`;
+    const sql = `SELECT * FROM cliente WHERE cpf = "${cpf}"`;
 
     const [err, result] = await to(
       new Promise((resolve, reject) => {

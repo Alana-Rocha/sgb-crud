@@ -12,7 +12,7 @@ export class Ingresso {
     this.scan = PromptSync();
   }
 
-  inputDados(sesao, poltrona, cliente) {
+  inputDadosIngresso(sesao, poltrona, cliente) {
     this.sessao_id = sesao;
     this.poltrona_id = poltrona;
     this.cpf_cliente = cliente;
