@@ -1,6 +1,6 @@
 import PromptSync from "prompt-sync";
 import { connectDB, connection } from "./database/conexion.js";
-import { Cliente } from "./models/clientes.js";
+import { ClienteController } from "./controllers/ClienteController.js";
 import { Filme } from "./models/filmes.js";
 import { Ingresso } from "./models/Ingressos.js";
 import { Poltrona } from "./models/Poltronas.js";
@@ -16,6 +16,8 @@ menuRemoverRegistro,
 } from "./utils/menus.js";
 
 const scan = PromptSync();
+
+const cliente = new ClienteController();
 
 async function main() {
   try {
@@ -97,7 +99,7 @@ async function main() {
 }
 
 async function relatorios() {
-  const cliente = new Cliente();
+  // const cliente = new Cliente();
   const filme = new Filme();
   const sessao = new Sessao();
   const sala = new Sala();
@@ -138,7 +140,7 @@ async function relatorios() {
 }
 
 async function inserirRegistros() {
-  const cliente = new Cliente();
+  // const cliente = new Cliente();
   const sessao = new Sessao();
   const sala = new Sala();
   const filme = new Filme();
@@ -151,8 +153,7 @@ async function inserirRegistros() {
 
   switch (opt) {
     case 1:
-      cliente.inputDadosCliente();
-      await cliente.inserirDadosCliente();
+      await cliente.inputDadosCliente();
       break;
 
     case 2:
@@ -212,7 +213,7 @@ async function inserirRegistros() {
 }
 
 async function removerRegistros() {
-  const cliente = new Cliente();
+  // const cliente = new Cliente();
   const filme = new Filme();
   const ingresso = new Ingresso();
   const sessao = new Sessao();
