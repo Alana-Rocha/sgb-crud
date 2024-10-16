@@ -12,9 +12,9 @@ export class Sessao {
     this.scan = PromptSync();
   }
 
-  inputDadosSessao() {
-    this.filme_id = +this.scan("Id do filme: ");
-    this.sala_id = +this.scan("Id da sala: ");
+  inputDadosSessao(filmeId, salaId) {
+    this.filme_id = filmeId;
+    this.sala_id = salaId;
     this.horario_inicio = this.scan(
       "Digite o Horario de inicio do filme (DD/MM/AAAA HH/MM): "
     );
@@ -77,6 +77,7 @@ export class Sessao {
     }
 
     const df = new dfd.DataFrame(result);
+    df.setIndex({ column: "id", drop: true, inplace: true });
     df.print();
 
     return df;

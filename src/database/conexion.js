@@ -11,6 +11,7 @@ export const connection = mysql.createConnection({
   password: process.env.PASSWORD,
   database: process.env.DATABASE,
   multipleStatements: true,
+  
 });
 
 export async function connectDB() {

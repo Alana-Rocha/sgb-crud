@@ -1,18 +1,18 @@
 import PromptSync from "prompt-sync";
 import { connectDB, connection } from "./database/conexion.js";
-import { ClienteController } from "./controllers/ClienteController.js";
+import { ClienteController } from "./controllers/clienteController.js";
 import { Filme } from "./models/filmes.js";
-import { Ingresso } from "./models/Ingressos.js";
-import { Poltrona } from "./models/Poltronas.js";
-import { Sala } from "./models/Salas.js";
+import { Ingresso } from "./models/ingressos.js";
+import { Poltrona } from "./models/poltronas.js";
+import { Sala } from "./models/salas.js";
 import { Sessao } from "./models/sessoes.js";
-import { executeSqlFile } from "./queries/query.js";
+import { executeSqlFile, executeInsertData } from "./queries/query.js";
 import {
   menuInicial,
-menuRemoverRegistro,
+  menuRemoverRegistro,
   menuInserirRegistro,
-  menuTabelas,
   menuTabelasAtt,
+  menuRelatorios,
 } from "./utils/menus.js";
 
 const scan = PromptSync();
@@ -23,6 +23,7 @@ async function main() {
   try {
     await connectDB();
     await executeSqlFile();
+    await executeInsertData();
 
     let opt;
     let opt2;
@@ -105,32 +106,20 @@ async function relatorios() {
   const sala = new Sala();
   const ingresso = new Ingresso();
 
-  menuTabelas();
+  menuRelatorios();
 
   let opt = +scan("Opção: ");
 
   switch (opt) {
     case 1:
-      await cliente.buscarCliente();
+      await ingresso.ingressosVendidos();
       break;
 
     case 2:
-      await filme.buscarFilme();
-      break;
-
-    case 3:
-      await ingresso.buscarIngressos();
-      break;
-
-    case 4:
-      await sala.buscarSalas();
-      break;
-
-    case 5:
       await sessao.buscarSessoes();
       break;
 
-    case 6:
+    case 3:
       break;
 
     default:
@@ -177,7 +166,7 @@ async function inserirRegistros() {
 
       let clienteCpf = scan("Escolha o CPF do Cliente: ");
 
-      ingresso.inputDados(sessaoId, poltronaId, clienteCpf);
+      ingresso.inputDadosIngresso(sessaoId, poltronaId, clienteCpf);
 
       if ((await poltrona.ocuparPoltrona(poltronaId)) === false) {
         console.log("\nCadeira já está ocupada...\n");
@@ -193,11 +182,15 @@ async function inserirRegistros() {
 
       await filme.buscarFilme();
 
+      let filmeId = +scan("Escolha o Id do Filme: ");
+
       console.log("\nSALAS");
 
       await sala.buscarSalas();
 
-      sessao.inputDadosSessao();
+      let salaId = +scan("Escolha o Id da Sala: ");
+
+      sessao.inputDadosSessao(filmeId, salaId);
 
       await sessao.inserirDadosSessao();
 

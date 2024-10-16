@@ -1,3 +1,10 @@
+DROP TABLE sessoes;
+DROP TABLE poltronas;
+DROP TABLE ingressos;
+DROP TABLE salas;
+DROP TABLE filmes;
+DROP TABLE cliente;
+
 CREATE TABLE IF NOT EXISTS cliente (
   cpf VARCHAR(14) PRIMARY KEY,
   nome_cliente VARCHAR(100) NOT NULL,
@@ -27,7 +34,8 @@ CREATE TABLE IF NOT EXISTS sessoes (
 CREATE TABLE IF NOT EXISTS poltronas (
     id SERIAL PRIMARY KEY,
     sala_id int REFERENCES salas(id) ON DELETE CASCADE,
-    numero_poltrona VARCHAR(10) NOT NULL
+    numero_poltrona VARCHAR(10) NOT NULL,
+    status_poltrona ENUM('OCUPADA', 'DESOCUPADA') NOT NULL DEFAULT 'DESOCUPADA'
 );
 
 CREATE TABLE IF NOT EXISTS ingressos (

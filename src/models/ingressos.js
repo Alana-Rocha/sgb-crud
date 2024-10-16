@@ -79,6 +79,7 @@ export class Ingresso {
     }
 
     const df = new dfd.DataFrame(result);
+    df.setIndex({ column: "id", drop: true, inplace: true });
     df.print();
 
     return df;
@@ -104,5 +105,36 @@ export class Ingresso {
     }
 
     console.log("Ingresso excluído com sucesso!");
+  }
+
+  async ingressosVendidos() {
+    const sql = `SELECT filmes.titulo AS nome_filme,              
+                 COUNT(ingressos.id) AS total_ingressos    
+                 FROM ingressos
+                 JOIN sessoes ON ingressos.sessao_id = sessoes.id
+                 JOIN filmes ON sessoes.filme_id = filmes.id
+                 GROUP BY filmes.titulo;  `;
+
+    const [err, result] = await to(
+      new Promise((resolve, reject) => {
+        connection.query(sql, (err, result) => {
+          if (err) {
+            return reject(new Error("Erro ao buscar ingressos vendidos: " + err.message));
+          }
+          resolve(result);
+        });
+      })
+    );
+
+    if (err) {
+      console.error(err);
+      return;
+    }
+
+    const df = new dfd.DataFrame(result);
+
+    df.print();
+
+    return df;
   }
 }

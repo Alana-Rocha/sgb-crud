@@ -24,8 +24,7 @@ export class ClienteController {
   }
 
   async buscarCliente() {
-    const clientes = await this.clienteModel.buscarClientes();
-    console.log(clientes);
+    await this.clienteModel.buscarClientes();
   }
 
   async removerCliente() {

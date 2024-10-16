@@ -52,6 +52,14 @@ export function splashScreen() {
   `);
 }
 
+export function menuRelatorios() {
+  console.log(`
+    1 - Ingressos Vendidos
+    2 - Sessões Atuais
+    3 - Voltar
+    `);
+}
+
 export function menuTabelas() {
   console.log(`
     1 - Cliente
@@ -79,7 +87,7 @@ export function menuInserirRegistro() {
     1 - Cliente
     2 - Filme
     3 - Ingresso
-    4 - Sessao
+    4 - Sessão
     5 - Voltar
     `);
 }
@@ -89,9 +97,8 @@ export function menuRemoverRegistro() {
     \nEscolha uma opção para remover um registro:\n   
     1 - Cliente
     2 - Filme
-    3 - Ingresso
-    4 - Sessao
-    5 - Voltar
+    3 - Sessao
+    4 - Voltar
     `);
 }
 

@@ -1,3 +1,4 @@
+import dfd from "danfojs-node";
 import { connection } from "../database/conexion.js";
 import { to } from "../utils/errorHandler.js";
 
@@ -29,7 +30,11 @@ export class ClienteModel {
 
     if (err) throw err;
 
-    return result;
+    const df = new dfd.DataFrame(result);
+    df.setIndex({ column: "cpf", drop: true, inplace: true });
+    df.print();
+
+    return df;
   }
 
   async removerCliente(cpf) {

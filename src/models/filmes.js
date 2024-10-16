@@ -62,6 +62,7 @@ export class Filme {
 
     const df = new dfd.DataFrame(result);
 
+    df.setIndex({ column: "id", drop: true, inplace: true });
     df.print();
 
     return df;
