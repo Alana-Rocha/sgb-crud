@@ -28,11 +28,15 @@ export class ClienteModel {
         });
       });
 
-    const df = new dfd.DataFrame(result);
-    df.setIndex({ column: "cpf", drop: true, inplace: true });
-    df.print();
+      const df = new dfd.DataFrame(result);
+      df.setIndex({ column: "cpf", drop: true, inplace: true });
+      df.print();
 
-    return df;
+      return df;
+    } catch (error) {
+      console.error("Erro ao buscar Cliente", error.message);
+      throw error;
+    }
   }
 
   async removerCliente(cpf) {
