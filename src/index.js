@@ -103,7 +103,6 @@ async function relatorios() {
   const filme = new Filme();
   const sessao = new Sessao();
   const sala = new Sala();
-  const poltrona = new Poltrona();
   const ingresso = new Ingresso();
 
   menuTabelas();

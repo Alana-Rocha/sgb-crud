@@ -61,6 +61,7 @@ export class Filme {
     }
 
     const df = new dfd.DataFrame(result);
+
     df.print();
 
     return df;

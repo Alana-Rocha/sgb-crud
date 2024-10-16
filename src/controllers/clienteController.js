@@ -10,7 +10,7 @@ export class ClienteController {
 
   async inputDadosCliente() {
     const cpf = prompt("Digite o CPF: ");  // Use 'prompt' diretamente aqui
-    const cliente = await this.clienteModel.buscarClientes(cpf);
+    const cliente = await this.clienteModel.verificaCpf(cpf);
     if (cliente.length > 0) {
       console.log("Cliente já registrado.");
       return;

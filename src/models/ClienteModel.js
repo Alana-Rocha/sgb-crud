@@ -45,4 +45,20 @@ export class ClienteModel {
 
     if (err) throw err;
   }
+
+  async verificaCpf(cpf) {
+    const sql = `SELECT * FROM cliente WHERE cpf = ${cpf}`;
+    const [err, result] = await to(
+      new Promise((resolve, reject) => {
+        connection.query(sql, (err, result) => {
+          if (err) return reject(err);
+          resolve(result);
+        });
+      })
+    );
+
+    if (err) throw err;
+
+    return result;
+  }
 }
