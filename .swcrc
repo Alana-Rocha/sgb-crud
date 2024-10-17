@@ -1,14 +1,15 @@
 {
+  "$schema": "https://swc.rs/schema.json",
   "jsc": {
     "parser": {
-      "syntax": "ecmascript",
+      "syntax": "typescript",
       "tsx": false
     },
     "target": "es2022",
-    "loose": true
+    "loose": false
   },
   "module": {
     "type": "commonjs"
   },
-  "minify": true
+  "minify": false
 }
