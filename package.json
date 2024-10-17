@@ -13,7 +13,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "danfojs-node": "^1.1.2",
     "mysql2": "^3.11.3",
     "prompt-sync": "^4.2.0"
   },

@@ -1,5 +1,4 @@
 import { executeQuery } from "../database/connection";
-import * as dfd from "danfojs-node";
 
 type SessaoModelProps = {
   id?: number;
@@ -36,9 +35,6 @@ export class SessaoModel implements SessaoModelProps {
                   JOIN
                     salas ON sessoes.sala_id = salas.id;`;
     const sessoes = await executeQuery(sql);
-    const df = new dfd.DataFrame(sessoes);
-    df.setIndex({ column: "id", drop: true, inplace: true });
-    df.print();
-    return df;
+    console.table(sessoes);
   }
 }
