@@ -2,6 +2,7 @@ import console from "console";
 import { IngressoModel } from "../models/IngressoModel";
 import { SessaoModel } from "../models/SessaoModel";
 import { scan } from "../utils/scan";
+import { ClienteModel } from "../models/ClienteModel";
 
 export class IngressoController {
   async inserir() {
@@ -12,8 +13,8 @@ export class IngressoController {
 
     const poltrona_id = +scan("Id da Poltrona: ");
 
-    //TODO await ClienteModel.read();
-    
+    await ClienteModel.read();
+
     const cpf_cliente = scan("Cpf do Cliente: ");
 
     const ingresso = new IngressoModel({ cpf_cliente, poltrona_id, sessao_id });
