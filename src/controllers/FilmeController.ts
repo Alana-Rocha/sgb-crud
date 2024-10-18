@@ -28,8 +28,5 @@ export class FilmeController {
     await FilmeModel.update(filmeAtualizado);
   }
 
-  async excluir() {
-    
-    
-  }
+  async excluir() {}
 }

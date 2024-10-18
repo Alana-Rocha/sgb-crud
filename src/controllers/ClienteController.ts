@@ -21,6 +21,7 @@ export class ClienteController {
     await ClienteModel.create(novoCliente);
   }
 
+  //TODO: VERIFICAR CPF QUE NÃO EXISTE
   async listar() {
     await ClienteModel.read();
     scan("Aperte a tecla Enter para continuar >>>");

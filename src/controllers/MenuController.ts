@@ -45,7 +45,7 @@ ${logo}
   1 - CLIENTES: ${clientesQtd}
   2 - FILMES: ${filmesQtd}
   3 - INGRESSOS: ${ingressosQtd}
-  4 - SALAS: 5
+  4 - SALAS: 5 
   5 - SESSÕES: ${sessoesQtd}
 
 CRIADO POR:
