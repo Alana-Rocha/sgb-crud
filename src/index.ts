@@ -9,6 +9,9 @@ const main = async () => {
   const menuController = new MenuController();
 
   while (true) {
+    await menuController.splashScreen();
+    await setTimeout(2000);
+
     menuController.mostrarMenu();
     const opt = +scan(">>> ");
 

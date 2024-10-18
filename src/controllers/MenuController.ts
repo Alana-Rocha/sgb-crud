@@ -1,6 +1,7 @@
 import { ClienteModel } from "../models/ClienteModel";
 import { FilmeModel } from "../models/FilmeModel";
 import { IngressoModel } from "../models/IngressoModel";
+import { SessaoModel } from "../models/SessaoModel";
 import { logo } from "../utils/menu";
 import { scan } from "../utils/scan";
 import { ClienteController } from "./ClienteController";
@@ -32,6 +33,7 @@ ${logo}
     const clientesQtd = await ClienteModel.count();
     const filmesQtd = await FilmeModel.count();
     const ingressosQtd = await IngressoModel.count();
+    const sessoesQtd = await SessaoModel.count();
 
     console.log(`
 ======================================================================================================
@@ -41,15 +43,15 @@ ${logo}
   1 - CLIENTES: ${clientesQtd}
   2 - FILMES: ${filmesQtd}
   3 - INGRESSOS: ${ingressosQtd}
-  4 - SALAS:
-  5 - SESSÕES:
+  4 - SALAS: 5
+  5 - SESSÕES: ${sessoesQtd}
 
 CRIADO POR:
-  ALANA 
-  LUIZ 
-  JULIANA
-  JOÃO VICTOR
-  PATRICK
+  ALANA ROCHA
+  LUIZ DOMINISINI
+  JULIANA SEITH
+  JOÃO VICTOR SANTANA
+  PATRICK TORREZANI
 
 DISCIPLINA: BANCO DE DADOS - 2024/2
 PROFESSOR: HOWARD ROATTI\n

@@ -22,9 +22,8 @@ export class ClienteController {
   }
 
   async listar() {
-    const cliente = await ClienteModel.read();
-    console.table(cliente);
-    // scan("Aperte a tecla Enter para continuar >>>");
+    await ClienteModel.read();
+    scan("Aperte a tecla Enter para continuar >>>");
   }
 
   async excluir() {

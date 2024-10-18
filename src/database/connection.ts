@@ -26,8 +26,10 @@ export async function connectDb() {
   const createTablesSQL = readFileSync("sql/create-tables.sql", "utf-8");
   const populateTablesSQL = readFileSync("sql/populate-tables.sql", "utf-8");
   const createTriggersSQL = readFileSync("sql/create-triggers.sql", "utf-8");
+  const addRelationSQL = readFileSync("sql/add-relation.sql", "utf-8");
 
   await executeQuery(createTablesSQL);
+  await executeQuery(addRelationSQL);
   await executeQuery(populateTablesSQL);
   await executeQuery(createTriggersSQL);
 }
