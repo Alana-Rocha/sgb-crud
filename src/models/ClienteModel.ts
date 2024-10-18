@@ -37,7 +37,7 @@ export class ClienteModel implements ClienteModelProps {
   static async read() {
     const sql = "SELECT * FROM cliente";
     const clientes = await executeQuery<ClienteModel[]>(sql);
-    console.table(clientes);
+    return console.table(clientes);
   }
 
   static async delete(cpf: string) {

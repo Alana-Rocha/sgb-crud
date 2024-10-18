@@ -3,13 +3,18 @@ import { IngressoModel } from "../models/IngressoModel";
 import { SessaoModel } from "../models/SessaoModel";
 import { scan } from "../utils/scan";
 import { ClienteModel } from "../models/ClienteModel";
+import PoltronaModel from "../models/PoltronaModel";
 
 export class IngressoController {
   async inserir() {
     await SessaoModel.read();
-    const sessao_id = +scan("Id da Sessão: ");
+    const sessao_id: number = +scan("Id da Sessão: ");
 
-    //TODO await PoltronaModel.read();
+    const findSessao = await SessaoModel.find(sessao_id);
+
+    const poltronas = await PoltronaModel.read(findSessao[0].sala_id);
+
+    console.table(poltronas);
 
     const poltrona_id = +scan("Id da Poltrona: ");
 
@@ -17,6 +22,8 @@ export class IngressoController {
 
     const cpf_cliente = scan("Cpf do Cliente: ");
 
+    await PoltronaModel.ocupaPoltrona(poltrona_id);
+    
     const ingresso = new IngressoModel({ cpf_cliente, poltrona_id, sessao_id });
     await IngressoModel.create(ingresso);
   }

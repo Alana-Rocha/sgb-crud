@@ -2,6 +2,7 @@ import { ClienteModel } from "../models/ClienteModel";
 import { FilmeModel } from "../models/FilmeModel";
 import { IngressoModel } from "../models/IngressoModel";
 import { SessaoModel } from "../models/SessaoModel";
+import Relatorio from "../reports/relatorio";
 import { logo } from "../utils/menu";
 import { scan } from "../utils/scan";
 import { ClienteController } from "./ClienteController";
@@ -88,6 +89,8 @@ PROFESSOR: HOWARD ROATTI\n
 
     switch (opt) {
       case 1:
+        await Relatorio.ingVendidos();
+        scan('Pressione enter para continuar >>>')
         break;
       case 2:
         console.log("mostrar relatorio Sessões Atuais");
