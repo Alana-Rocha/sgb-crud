@@ -35,7 +35,13 @@ export class SessaoModel implements SessaoModelProps {
                   JOIN
                     salas ON sessoes.sala_id = salas.id;`;
     const sessoes = await executeQuery(sql);
-    console.table(sessoes);
+    return console.table(sessoes);
+  }
+
+  static async find(sessao_id: number): Promise<SessaoModel> {
+    const sql = `SELECT * FROM mydb.sessoes WHERE id = ${sessao_id}`;
+    const sessao = await executeQuery(sql);
+    return sessao;
   }
 
   static async count() {
