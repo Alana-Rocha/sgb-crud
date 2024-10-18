@@ -22,12 +22,6 @@ export class SessaoModel implements SessaoModelProps {
     console.log("Sessão criada com sucesso!");
   }
 
-  static async count() {
-    const sql = "SELECT COUNT(*) AS sessaoQtd FROM sessoes;";
-    const sessoesQtd = await executeQuery<{ sessoesQtd: number }[]>(sql);
-    return sessoesQtd[0].sessoesQtd;
-  }
-
   static async read() {
     const sql = `SELECT
                     sessoes.id,
@@ -42,5 +36,11 @@ export class SessaoModel implements SessaoModelProps {
                     salas ON sessoes.sala_id = salas.id;`;
     const sessoes = await executeQuery(sql);
     console.table(sessoes);
+  }
+
+  static async count() {
+    const sql = "SELECT COUNT(*) AS sessaoQtd FROM sessoes;";
+    const sessaoQtd = await executeQuery<{ sessaoQtd: number }[]>(sql);
+    return sessaoQtd[0].sessaoQtd;
   }
 }

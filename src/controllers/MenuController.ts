@@ -35,6 +35,8 @@ ${logo}
     const ingressosQtd = await IngressoModel.count();
     const sessoesQtd = await SessaoModel.count();
 
+    console.log(sessoesQtd);
+
     console.log(`
 ======================================================================================================
 \nSISTEMA DE GERENCIAMENTO DE BILHETERIA DE CINEMA

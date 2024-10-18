@@ -30,8 +30,8 @@ const main = async () => {
     await menuController.mostrarSubMenu(+opt);
     await setTimeout(1000);
 
-    await menuController.splashScreen();
-    await setTimeout(2000);
+    // await menuController.splashScreen();
+    // await setTimeout(2000);
   }
 };
 
