@@ -19,7 +19,6 @@ export class ClienteModel implements ClienteModelProps {
     const sql = `INSERT INTO cliente (cpf, nome_cliente, idade) VALUES ("${cliente.cpf}", "${cliente.nome}", ${cliente.idade})`;
     await executeQuery(sql);
 
-    console.log("\nCliente cadastrado com sucesso!!!\n");
   }
 
   static async count() {
@@ -44,7 +43,5 @@ export class ClienteModel implements ClienteModelProps {
     const sql = `DELETE FROM ingressos WHERE cpf_cliente = "${cpf}";
                  DELETE FROM cliente WHERE cpf = "${cpf}";`;
     await executeQuery(sql);
-
-    console.log("\nCliente deletado com sucesso!!!\n");
   }
 }
