@@ -22,7 +22,6 @@ export class ClienteController {
     console.log("\nCliente cadastrado com sucesso!!!\n");
   }
 
-  //TODO: VERIFICAR CPF QUE NÃO EXISTE
   async listar() {
     await ClienteModel.read();
     scan("Aperte a tecla Enter para continuar >>>");

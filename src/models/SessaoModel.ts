@@ -34,7 +34,7 @@ export class SessaoModel implements SessaoModelProps {
                     filmes ON sessoes.filme_id = filmes.id
                   JOIN
                     salas ON sessoes.sala_id = salas.id;`;
-    const sessoes = await executeQuery(sql);
+    const sessoes = await executeQuery<SessaoModel[]>(sql);
     return console.table(sessoes);
   }
 
@@ -48,5 +48,11 @@ export class SessaoModel implements SessaoModelProps {
     const sql = "SELECT COUNT(*) AS sessaoQtd FROM sessoes;";
     const sessaoQtd = await executeQuery<{ sessaoQtd: number }[]>(sql);
     return sessaoQtd[0].sessaoQtd;
+  }
+
+  static async delete(id: number) {
+    const sql = `DELETE FROM sessoes WHERE id = ${id}`;
+    await executeQuery(sql);
+    console.log("Sessão removida com sucesso");
   }
 }
