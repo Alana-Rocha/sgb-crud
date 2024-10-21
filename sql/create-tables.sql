@@ -15,7 +15,8 @@ CREATE TABLE IF NOT EXISTS filmes (
     id INT(11) PRIMARY KEY AUTO_INCREMENT,
     titulo VARCHAR(255) NOT NULL,
     duracao DOUBLE NOT NULL,
-    genero VARCHAR(255) NOT NULL
+    genero VARCHAR(255) NOT NULL,
+    updatedAt timestamp(2) NULL DEFAULT NULL
 );
 
 CREATE TABLE IF NOT EXISTS salas (
@@ -28,7 +29,7 @@ CREATE TABLE IF NOT EXISTS sessoes (
     id INT(11) PRIMARY KEY AUTO_INCREMENT,
     filme_id INT(11) NOT NULL,
     sala_id INT(11) NOT NULL,
-    horario_inicio VARCHAR(50) NOT NULL
+    horario_inicio DATETIME NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS poltronas (

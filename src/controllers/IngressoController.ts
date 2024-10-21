@@ -22,8 +22,16 @@ export class IngressoController {
 
     const cpf_cliente = scan("Cpf do Cliente: ");
 
+    const cliente = await ClienteModel.findByCpf(cpf_cliente);
+
+    if (!cliente) {
+      console.log("Este CPF não existe em nossa base de dados ");
+      console.log("Voltando para o menu principal...");
+      return;
+    }
+
     await PoltronaModel.ocupaPoltrona(poltrona_id);
-    
+
     const ingresso = new IngressoModel({ cpf_cliente, poltrona_id, sessao_id });
     await IngressoModel.create(ingresso);
   }

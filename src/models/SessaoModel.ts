@@ -1,4 +1,5 @@
 import { executeQuery } from "../database/connection";
+import { FilmeModel } from "./FilmeModel";
 
 type SessaoModelProps = {
   id?: number;
@@ -17,7 +18,7 @@ export class SessaoModel implements SessaoModelProps {
     Object.assign(this, props);
   }
   static async create(sessao: Omit<SessaoModel, "id">) {
-    const sql = `INSERT INTO sessoes (filme_id, sala_id, horario_inicio) VALUES (${sessao.filme_id}, ${sessao.sala_id}, ${sessao.horario_inicio});`;
+    const sql = `INSERT INTO mydb.sessoes (filme_id, sala_id, horario_inicio) VALUES (${sessao.filme_id}, ${sessao.sala_id}, '${sessao.horario_inicio}');`;
     await executeQuery(sql);
     console.log("Sessão criada com sucesso!");
   }
@@ -29,7 +30,7 @@ export class SessaoModel implements SessaoModelProps {
                     salas.nome AS nome_sala,
                     sessoes.horario_inicio
                   FROM
-                    sessoes
+                    mydb.sessoes
                   JOIN
                     filmes ON sessoes.filme_id = filmes.id
                   JOIN
@@ -44,8 +45,14 @@ export class SessaoModel implements SessaoModelProps {
     return sessao;
   }
 
+  static async findByFilme(filme_id: number): Promise<FilmeModel> {
+    const sql = `SELECT * FROM mydb.sessoes WHERE filme_id = ${filme_id};`;
+    const filmes = await executeQuery(sql);
+    return filmes;
+  }
+
   static async count() {
-    const sql = "SELECT COUNT(*) AS sessaoQtd FROM sessoes;";
+    const sql = "SELECT COUNT(*) AS sessaoQtd FROM mydb.sessoes;";
     const sessaoQtd = await executeQuery<{ sessaoQtd: number }[]>(sql);
     return sessaoQtd[0].sessaoQtd;
   }

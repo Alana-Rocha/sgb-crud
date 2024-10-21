@@ -21,16 +21,19 @@ export class FilmeModel implements FilmeModelProps {
     const sql = `INSERT INTO filmes (titulo, duracao, genero) VALUES ("${filme.titulo}", ${filme.duracao}, "${filme.genero}");`;
     await executeQuery(sql);
     console.log("Filme cadastrado com sucesso!");
+    return;
   }
 
   static async read() {
-    const sql = "SELECT * FROM filmes;";
+    const sql = "SELECT * FROM filmes WHERE updatedAt IS NULL;";
     const filmes = await executeQuery<FilmeModel[]>(sql);
     console.table(filmes);
+    return;
   }
 
   static async count() {
-    const sql = "SELECT COUNT(*) AS filmesQtd FROM filmes;";
+    const sql =
+      "SELECT COUNT(*) AS filmesQtd FROM filmes WHERE updatedAt IS NULL;";
     const filmesQtd = await executeQuery<{ filmesQtd: number }[]>(sql);
     return filmesQtd[0].filmesQtd;
   }
@@ -45,11 +48,15 @@ export class FilmeModel implements FilmeModelProps {
 `;
     await executeQuery(sql);
     console.log("\nFilme atualizado com sucesso!\n");
+    return;
   }
 
-  static async delete() {
-    const sql = `DELETE FROM filmes WHERE id = ?`;
+  static async delete(filme_id: number) {
+    const sql = ` UPDATE mydb.filmes 
+                  SET updatedAt = current_timestamp()
+                  WHERE id = ${filme_id};`;
     await executeQuery(sql);
     console.log("Filme removido com sucesso");
+    return;
   }
 }

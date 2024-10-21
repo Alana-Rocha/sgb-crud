@@ -145,5 +145,5 @@ PROFESSOR: HOWARD ROATTI\n
       case 5:
         break;
     }
-  }git
+  }
 }
