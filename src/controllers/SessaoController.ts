@@ -36,13 +36,11 @@ export class SessaoController {
   }
 
   async excluir() {
-    this.listar();
-    await setTimeout(() => {}, 200);
+    await SessaoModel.read();
+
     const id = scan("Digite o id da sessão que deseja excluir: ");
 
     const sessaoFilme = await SessaoModel.find(+id);
-
-    console.log(sessaoFilme);
 
     if (!sessaoFilme) {
       console.log("Esta sessão não existe em nossa base de dados.");

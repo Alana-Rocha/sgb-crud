@@ -34,8 +34,9 @@ export class SessaoModel implements SessaoModelProps {
                   JOIN
                     filmes ON sessoes.filme_id = filmes.id
                   JOIN
-                    salas ON sessoes.sala_id = salas.id;`;
-    const sessoes = await executeQuery<SessaoModel[]>(sql);
+                    salas ON sessoes.sala_id = salas.id
+                  WHERE sessoes.updatedAt IS NULL;`;
+    const sessoes = await executeQuery(sql);
     return console.table(sessoes);
   }
 
@@ -58,7 +59,10 @@ export class SessaoModel implements SessaoModelProps {
   }
 
   static async delete(id: number) {
-    const sql = `DELETE FROM sessoes WHERE id = ${id}`;
+    const sql = ` UPDATE mydb.sessoes
+                  SET updatedAt = current_timestamp()
+                  WHERE id = ${id};
+    `;
     await executeQuery(sql);
     console.log("Sessão removida com sucesso");
   }
