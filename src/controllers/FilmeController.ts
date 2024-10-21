@@ -1,7 +1,7 @@
-import { FilmeModel } from "../models/FilmeModel";
 import { setTimeout } from "timers/promises";
-import { scan } from "../utils/scan";
+import { FilmeModel } from "../models/FilmeModel";
 import { SessaoModel } from "../models/SessaoModel";
+import { scan } from "../utils/scan";
 
 export class FilmeController {
   async inserir() {
@@ -59,8 +59,6 @@ export class FilmeController {
       console.log("Voltando para o menu principal...");
       return;
     }
-    //TODO esperar sessaoModel exluir
-    // await SessaoModel.
 
     await FilmeModel.delete(filme_id);
 
