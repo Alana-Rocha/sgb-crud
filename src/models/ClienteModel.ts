@@ -18,7 +18,6 @@ export class ClienteModel implements ClienteModelProps {
   static async create(cliente: ClienteModel) {
     const sql = `INSERT INTO cliente (cpf, nome_cliente, idade) VALUES ("${cliente.cpf}", "${cliente.nome}", ${cliente.idade})`;
     await executeQuery(sql);
-
   }
 
   static async count() {
@@ -37,6 +36,18 @@ export class ClienteModel implements ClienteModelProps {
     const sql = "SELECT * FROM cliente";
     const clientes = await executeQuery<ClienteModel[]>(sql);
     return console.table(clientes);
+  }
+
+  static async update(cliente: ClienteModel) {
+    const sql = `
+    UPDATE mydb.cliente
+    SET nome_cliente = '${cliente.nome}',
+        idade = '${cliente.idade}'
+    WHERE cpf = ${cliente.cpf}; 
+`;
+    await executeQuery(sql);
+    console.log("\nCliente atualizado com sucesso!\n");
+    return;
   }
 
   static async delete(cpf: string) {

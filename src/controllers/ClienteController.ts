@@ -26,6 +26,18 @@ export class ClienteController {
     scan("Aperte a tecla Enter para continuar >>>");
   }
 
+  async atualizar() {
+    await ClienteModel.read();
+
+    const cpf = scan("Atualizar pelo CPF do cliente: ");
+    const nome = scan("Novo nome: ");
+    const idade = +scan("Nova idade: ");
+
+    const clienteAtualizado = new ClienteModel({ cpf, nome, idade });
+
+    await ClienteModel.update(clienteAtualizado);
+  }
+
   async excluir() {
     await ClienteModel.read();
     const cpf = scan("Digite o CPF que deseja excluir: ");

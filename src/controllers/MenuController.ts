@@ -36,8 +36,6 @@ ${logo}
     const ingressosQtd = await IngressoModel.count();
     const sessoesQtd = await SessaoModel.count();
 
-    console.log(sessoesQtd);
-
     console.log(`
 ======================================================================================================
 \nSISTEMA DE GERENCIAMENTO DE BILHETERIA DE CINEMA
@@ -46,7 +44,7 @@ ${logo}
   1 - CLIENTES: ${clientesQtd}
   2 - FILMES: ${filmesQtd}
   3 - INGRESSOS: ${ingressosQtd}
-  4 - SALAS: 5 
+  4 - SALAS: 5
   5 - SESSÕES: ${sessoesQtd}
 
 CRIADO POR:
@@ -102,7 +100,7 @@ PROFESSOR: HOWARD ROATTI\n
 
   private async menuTabelas(acao: "CRIAR" | "ATUALIZAR" | "DELETAR") {
     console.log(`
-      ${acao !== "ATUALIZAR" ? "1 - Cliente" : ""}
+      1 - Cliente
       2 - Filme
       4 - Sessao
       5 - Voltar 
@@ -116,6 +114,8 @@ PROFESSOR: HOWARD ROATTI\n
           await this.clienteController.inserir();
         } else if (acao === "DELETAR") {
           await this.clienteController.excluir();
+        } else if (acao === "ATUALIZAR") {
+          await this.clienteController.atualizar();
         }
         break;
       case 2:
