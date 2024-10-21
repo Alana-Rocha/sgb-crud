@@ -1,4 +1,5 @@
 import { executeQuery } from "../database/connection";
+import { SessaoController } from "../controllers/SessaoController";
 
 export default class Relatorio {
   static async ingVendidos() {
@@ -9,5 +10,11 @@ export default class Relatorio {
 
     const vendas = await executeQuery(sql);
     return console.table(vendas);
+  }
+
+  static async sessoesAbertas() {
+    const sessaoController = new SessaoController();
+    await sessaoController.listar();
+    return;
   }
 }

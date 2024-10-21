@@ -90,10 +90,10 @@ PROFESSOR: HOWARD ROATTI\n
     switch (opt) {
       case 1:
         await Relatorio.ingVendidos();
-        scan('Pressione enter para continuar >>>')
+        scan("Pressione enter para continuar >>>");
         break;
       case 2:
-        console.log("mostrar relatorio Sessões Atuais");
+        await Relatorio.sessoesAbertas();
         break;
       case 3:
         break;
@@ -129,18 +129,21 @@ PROFESSOR: HOWARD ROATTI\n
         }
         break;
       case 3:
-        await this.ingressoController.inserir();
-        //TODO: Criar o menu do ingresso para mostrar a tabela de sessões e poltronas para usuário escolher;
+        if (acao === "CRIAR") {
+          await this.ingressoController.inserir();
+        }
         break;
       case 4:
         if (acao === "CRIAR") {
           await this.sessaoController.inserir();
         } else if (acao === "DELETAR") {
           await this.sessaoController.excluir();
+        } else if (acao === "ATUALIZAR") {
+          //! COLOCAR ACAO ATUALIZAR
         }
         break;
       case 5:
         break;
     }
-  }
+  }git
 }

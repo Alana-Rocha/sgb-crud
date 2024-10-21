@@ -18,10 +18,11 @@ export class FilmeController {
   }
 
   async atualizar() {
+    await this.listar();
     const id = +scan("Atualizar pelo Id do filme: ");
-    const titulo = scan("Titulo do filme: ");
-    const duracao = +scan("Duração do filme: ");
-    const genero = scan("Gênero do filme: ");
+    const titulo = scan("Titulo do novo filme: ");
+    const duracao = +scan("Duração do novo filme: ");
+    const genero = scan("Gênero do novo filme: ");
 
     const filmeAtualizado = new FilmeModel({ id, titulo, duracao, genero });
 
