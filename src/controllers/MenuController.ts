@@ -104,7 +104,6 @@ PROFESSOR: HOWARD ROATTI\n
     console.log(`
       ${acao !== "ATUALIZAR" ? "1 - Cliente" : ""}
       2 - Filme
-      3 - Ingresso
       4 - Sessao
       5 - Voltar 
     `);
@@ -139,7 +138,7 @@ PROFESSOR: HOWARD ROATTI\n
         } else if (acao === "DELETAR") {
           await this.sessaoController.excluir();
         } else if (acao === "ATUALIZAR") {
-          //! COLOCAR ACAO ATUALIZAR
+          await this.sessaoController.atualizar();
         }
         break;
       case 5:

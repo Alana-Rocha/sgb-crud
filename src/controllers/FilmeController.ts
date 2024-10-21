@@ -20,7 +20,7 @@ export class FilmeController {
   }
 
   async atualizar() {
-    await this.listar();
+    await FilmeModel.read();
     const id = +scan("Atualizar pelo Id do filme: ");
     const titulo = scan("Titulo do novo filme: ");
     const duracao = +scan("Duração do novo filme: ");
@@ -29,6 +29,7 @@ export class FilmeController {
     const filmeAtualizado = new FilmeModel({ id, titulo, duracao, genero });
 
     await FilmeModel.update(filmeAtualizado);
+    return;
   }
 
   async excluir() {

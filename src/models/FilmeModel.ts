@@ -40,7 +40,7 @@ export class FilmeModel implements FilmeModelProps {
 
   static async update(filme: FilmeModel) {
     const sql = `
-    UPDATE filmes
+    UPDATE mydb.filmes
     SET titulo = '${filme.titulo}',
         duracao = '${filme.duracao}',
         genero = '${filme.genero}'

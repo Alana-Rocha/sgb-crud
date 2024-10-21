@@ -30,6 +30,51 @@ export class SessaoController {
     await SessaoModel.create(sessao);
   }
 
+  async atualizar() {
+    await SessaoModel.read();
+
+    const sessao_id = +scan("Id da sessão que deseja atualziar: ");
+
+    const sessao = await SessaoModel.find(sessao_id);
+
+    if (!sessao) {
+      console.log("Sessão não existe em nossa base de dados.");
+      console.log("Voltando ao menu principal...");
+      return;
+    }
+
+    await FilmeModel.read();
+    const novoFilme = +scan("Id do filme: ");
+
+    await SalaModel.read();
+    const novaSala = +scan("Id da sala: ");
+
+    const novo_horario_dia = scan("Digite o dia de inicio do filme (DD): ");
+
+    const novo_horario_mes = scan("Digite o mês de inicio do filme (MM): ");
+
+    const novo_horario_ano = scan("Digite o ano de inicio do filme (AAAA): ");
+
+    const novo_horario_hora =
+      +scan("Digite a hora de inicio do filme (hh): ") - 3;
+
+    const novo_horario_minuto = scan(
+      "Digite os minutos de inicio do filme (mm): "
+    );
+
+    const novo_horario_inicio = `${novo_horario_ano}-${novo_horario_mes}-${novo_horario_dia} ${novo_horario_hora.toString()}:${novo_horario_minuto}:00`;
+
+    const nova_sessao = {
+      filme_id: novoFilme,
+      sala_id: novaSala,
+      horario_inicio: novo_horario_inicio,
+      id: sessao_id,
+    };
+
+    await SessaoModel.update(nova_sessao);
+    return;
+  }
+
   async listar() {
     await SessaoModel.read();
     scan("Aperte a tecla Enter para continuar >>>");

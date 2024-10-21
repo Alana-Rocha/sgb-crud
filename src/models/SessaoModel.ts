@@ -40,6 +40,19 @@ export class SessaoModel implements SessaoModelProps {
     return console.table(sessoes);
   }
 
+  static async update(sessao: SessaoModel) {
+    const sql = `
+    UPDATE mydb.sessoes
+    SET filme_id = '${sessao.filme_id}',
+        sala_id = '${sessao.sala_id}',
+        horario_inicio = '${sessao.horario_inicio}'
+    WHERE id = ${sessao.id}; 
+`;
+    await executeQuery(sql);
+    console.log("\nSessão atualizada com sucesso!\n");
+    return;
+  }
+
   static async find(sessao_id: number): Promise<SessaoModel> {
     const sql = `SELECT * FROM mydb.sessoes WHERE id = ${sessao_id}`;
     const sessao = await executeQuery(sql);
@@ -53,7 +66,8 @@ export class SessaoModel implements SessaoModelProps {
   }
 
   static async count() {
-    const sql = "SELECT COUNT(*) AS sessaoQtd FROM mydb.sessoes;";
+    const sql =
+      "SELECT COUNT(*) AS sessaoQtd FROM mydb.sessoes WHERE updatedAt IS NULL;";
     const sessaoQtd = await executeQuery<{ sessaoQtd: number }[]>(sql);
     return sessaoQtd[0].sessaoQtd;
   }
