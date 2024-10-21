@@ -1,5 +1,7 @@
 import { FilmeModel } from "../models/FilmeModel";
+import { setTimeout } from "timers/promises";
 import { scan } from "../utils/scan";
+import { SessaoModel } from "../models/SessaoModel";
 
 export class FilmeController {
   async inserir() {
@@ -29,5 +31,38 @@ export class FilmeController {
     await FilmeModel.update(filmeAtualizado);
   }
 
-  async excluir() {}
+  async excluir() {
+    await FilmeModel.read();
+
+    await setTimeout(200);
+
+    const filme_id = +scan("Id do filme: ");
+
+    const filmes = await SessaoModel.findByFilme(filme_id);
+
+    if (filmes) {
+      console.log("Este Filme não existe em nossa base de dados.");
+      console.log("Voltando para o menu principal...");
+      return;
+    }
+
+    let mensagemAviso = "Confirmar ação? (1-Sim | 2-Não): ";
+
+    if (filmes) {
+      mensagemAviso = "Existe uma Sessão para esse Filme. " + mensagemAviso;
+    }
+
+    const confirmarAcao = scan(mensagemAviso);
+
+    if (confirmarAcao !== "1") {
+      console.log("Voltando para o menu principal...");
+      return;
+    }
+    //TODO esperar sessaoModel exluir
+    // await SessaoModel.
+
+    await FilmeModel.delete(filme_id);
+
+    return;
+  }
 }
