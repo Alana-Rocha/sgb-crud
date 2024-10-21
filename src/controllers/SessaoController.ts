@@ -83,15 +83,19 @@ export class SessaoController {
   async excluir() {
     await SessaoModel.read();
 
-    const id = scan("Digite o id da sessão que deseja excluir: ");
+    const id = +scan("Digite o id da sessão que deseja excluir: ");
 
-    const sessaoFilme = await SessaoModel.find(+id);
+    const sessaoFilme = await SessaoModel.find(id);
+
+    console.log(sessaoFilme);
 
     if (!sessaoFilme) {
       console.log("Esta sessão não existe em nossa base de dados.");
       console.log("Voltando para o menu principal...");
       return;
     }
+
+    console.log("Existem registros vinculados a essa sessão.");
 
     let mensagemAviso = "Confirmar ação? (1-Sim | 2-Não): ";
 
@@ -102,7 +106,7 @@ export class SessaoController {
       return;
     }
 
-    await SessaoModel.delete(+id);
+    await SessaoModel.delete(id);
     console.log("Sessão excluída com sucesso.");
   }
 }

@@ -1,4 +1,3 @@
-import { setTimeout } from "timers/promises";
 import { ClienteModel } from "../models/ClienteModel";
 import { IngressoModel } from "../models/IngressoModel";
 import { scan } from "../utils/scan";
@@ -28,8 +27,7 @@ export class ClienteController {
   }
 
   async excluir() {
-    this.listar();
-    await setTimeout(200);
+    await ClienteModel.read();
     const cpf = scan("Digite o CPF que deseja excluir: ");
 
     const ingressoCliente = await IngressoModel.findByCpf(cpf);
