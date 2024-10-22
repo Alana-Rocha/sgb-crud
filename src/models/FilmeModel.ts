@@ -59,4 +59,10 @@ export class FilmeModel implements FilmeModelProps {
     console.log("Filme removido com sucesso");
     return;
   }
+
+  static async find(filme_id: number): Promise<FilmeModel> {
+    const sql = `SELECT * FROM mydb.filmes WHERE id = ${filme_id};`;
+    const filmes = await executeQuery(sql);
+    return filmes;
+  }
 }

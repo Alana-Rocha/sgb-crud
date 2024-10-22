@@ -87,8 +87,6 @@ export class SessaoController {
 
     const sessaoFilme = await SessaoModel.find(id);
 
-    console.log(sessaoFilme);
-
     if (!sessaoFilme) {
       console.log("Esta sessão não existe em nossa base de dados.");
       console.log("Voltando para o menu principal...");

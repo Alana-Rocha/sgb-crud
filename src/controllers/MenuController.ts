@@ -102,6 +102,7 @@ PROFESSOR: HOWARD ROATTI\n
     console.log(`
       1 - Cliente
       2 - Filme
+      3 - Ingresso
       4 - Sessao
       5 - Voltar 
     `);

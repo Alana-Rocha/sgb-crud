@@ -35,13 +35,12 @@ export class FilmeController {
   async excluir() {
     await FilmeModel.read();
 
-    await setTimeout(200);
-
     const filme_id = +scan("Id do filme: ");
 
     const filmes = await SessaoModel.findByFilme(filme_id);
+    const filme = await FilmeModel.find(filme_id);
 
-    if (filmes) {
+    if (!filmes || !filme) {
       console.log("Este Filme não existe em nossa base de dados.");
       console.log("Voltando para o menu principal...");
       return;
