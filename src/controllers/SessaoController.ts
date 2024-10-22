@@ -33,7 +33,7 @@ export class SessaoController {
   async atualizar() {
     await SessaoModel.read();
 
-    const sessao_id = +scan("Id da sessão que deseja atualziar: ");
+    const sessao_id = +scan("Id da sessão que deseja atualizar: ");
 
     const sessao = await SessaoModel.find(sessao_id);
 

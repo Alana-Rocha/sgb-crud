@@ -65,13 +65,92 @@ PROFESSOR: HOWARD ROATTI\n
         await this.menuRelatorio();
         break;
       case 2:
-        await this.menuTabelas("CRIAR");
+        await this.menuCriar();
         break;
       case 3:
-        await this.menuTabelas("DELETAR");
+        await this.menuRemover();
         break;
       case 4:
-        await this.menuTabelas("ATUALIZAR");
+        await this.menuAtualizar();
+        break;
+    }
+  }
+
+  private async menuCriar() {
+    console.log(`
+      1 - Cliente
+      2 - Filme
+      3 - Ingresso
+      4 - Sessao
+      5 - Voltar 
+    `);
+
+    const opt = +scan(">>> ");
+
+    switch (opt) {
+      case 1:
+        await this.clienteController.inserir();
+        break;
+      case 2:
+        await this.filmeController.inserir();
+        break;
+      case 3:
+        await this.ingressoController.inserir();
+        break;
+      case 4:
+        await this.sessaoController.inserir();
+        break;
+      case 5:
+        break;
+    }
+  }
+
+  private async menuAtualizar() {
+    console.log(`
+      1 - Cliente
+      2 - Filme
+      3 - Sessao
+      4 - Voltar 
+    `);
+
+    const opt = +scan(">>> ");
+
+    switch (opt) {
+      case 1:
+        await this.clienteController.atualizar();
+        break;
+      case 2:
+        await this.filmeController.atualizar();
+        break;
+      case 3:
+        await this.sessaoController.atualizar();
+        break;
+      case 4:
+        break;
+    }
+  }
+
+  private async menuRemover() {
+    console.log(`
+      1 - Cliente
+      2 - Filme
+      3 - Sessao
+      4 - Voltar 
+    `);
+
+    const opt = +scan(">>> ");
+
+    switch (opt) {
+      case 1:
+        await this.clienteController.excluir();
+        break;
+      case 2:
+        await this.filmeController.excluir();
+        break;
+      case 3:
+        await this.sessaoController.excluir();
+        break;
+      case 4:
         break;
     }
   }
@@ -94,55 +173,6 @@ PROFESSOR: HOWARD ROATTI\n
         await Relatorio.sessoesAbertas();
         break;
       case 3:
-        break;
-    }
-  }
-
-  private async menuTabelas(acao: "CRIAR" | "ATUALIZAR" | "DELETAR") {
-    console.log(`
-      1 - Cliente
-      2 - Filme
-      3 - Ingresso
-      4 - Sessao
-      5 - Voltar 
-    `);
-
-    const opt = +scan(">>> ");
-
-    switch (opt) {
-      case 1:
-        if (acao === "CRIAR") {
-          await this.clienteController.inserir();
-        } else if (acao === "DELETAR") {
-          await this.clienteController.excluir();
-        } else if (acao === "ATUALIZAR") {
-          await this.clienteController.atualizar();
-        }
-        break;
-      case 2:
-        if (acao === "CRIAR") {
-          await this.filmeController.inserir();
-        } else if (acao === "DELETAR") {
-          await this.filmeController.excluir();
-        } else if (acao === "ATUALIZAR") {
-          await this.filmeController.atualizar();
-        }
-        break;
-      case 3:
-        if (acao === "CRIAR") {
-          await this.ingressoController.inserir();
-        }
-        break;
-      case 4:
-        if (acao === "CRIAR") {
-          await this.sessaoController.inserir();
-        } else if (acao === "DELETAR") {
-          await this.sessaoController.excluir();
-        } else if (acao === "ATUALIZAR") {
-          await this.sessaoController.atualizar();
-        }
-        break;
-      case 5:
         break;
     }
   }
