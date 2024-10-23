@@ -80,8 +80,8 @@ Antes de iniciar, certifique-se de ter as seguintes ferramentas instaladas em su
 1. #### Clonar o repositório
    - Clone o repositório do projeto para sua máquina local usando o seguinte comando:
    ```bash
-   git clone https://github.com/Alana-Rocha/sgb-crud.git
-   cd sgb-crud
+   git clone https://github.com/Alana-Rocha/sgbc-crud.git
+   cd sgbc-crud
    ```
 2. #### Instalar dependências
    - Navegue até o diretório do projeto e instale as dependências com o Yarn:
@@ -89,7 +89,7 @@ Antes de iniciar, certifique-se de ter as seguintes ferramentas instaladas em su
    yarn install
    ```
 3. #### Configurar banco de dados
-   - Criar Arquivo `.env` no Linux dentro de cd ./sgb-crud/ com o comando:
+   - Criar Arquivo `.env` no Linux dentro de cd ./sgbc-crud/ com o comando:
    ```bash
    touch .env
    ```
