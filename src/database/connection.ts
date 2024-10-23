@@ -4,7 +4,7 @@ import { readFileSync } from "node:fs";
 const connection = mysql.createConnection({
   host: process.env.HOST,
   port: process.env.PORT ? +process.env.PORT : 3306,
-  user: process.env.USER,
+  user: process.env.USR,
   password: process.env.PASSWORD,
   database: process.env.DATABASE,
   multipleStatements: true,
