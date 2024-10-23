@@ -78,7 +78,7 @@ Antes de iniciar, certifique-se de ter as seguintes ferramentas instaladas em su
 ## Instalação e configuração
 
 1. #### Clonar o repositório
-   -Clone o repositório do projeto para sua máquina local usando o seguinte comando:
+   - Clone o repositório do projeto para sua máquina local usando o seguinte comando:
    ```bash
    git clone https://github.com/Alana-Rocha/sgb-crud.git
    cd sgb-crud
