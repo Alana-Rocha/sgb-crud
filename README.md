@@ -117,3 +117,7 @@ Antes de iniciar, certifique-se de ter as seguintes ferramentas instaladas em su
   - [.swcrc](.swcrc): Arquivo de configuração do compilador SWC, utilizado para compilar TypeScript rapidamente.
   - [yarn.lock](yarn.lock): Mantém o controle das versões exatas das dependências para garantir que o ambiente seja reproduzível.
   - [.env.example](.env.example): Exemplo de configuração de variáveis de ambiente.
+
+
+## Link do video no youtube
+https://www.youtube.com/watch?v=PJqd1m88EDI
